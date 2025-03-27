@@ -1189,7 +1189,7 @@ class NotepadApp {
                         .then(content => {
                             // Apply the content to the notepad
                             this.notepad.innerHTML = content;
-                            this.showToast(`${file.name.split('.').pop().toUpperCase()} file imported with formatting`, 'success');
+                            this.showToast(`${file.name.split('.').pop().toUpperCase()} file imported successfully`, 'success');
                         })
                         .catch(error => {
                             console.error("Extraction error:", error);
@@ -1223,13 +1223,14 @@ class NotepadApp {
     
     extractOfficeContent(arrayBuffer, fileName) {
         return new Promise((resolve, reject) => {
-            // Better content extraction logic with improved formatting
+            // Better content extraction logic
             const extension = fileName.split('.').pop().toLowerCase();
             
             if (extension === 'docx') {
-                // Parse DOCX by looking for readable text content in XML with formatting
+                // Parse DOCX by looking for readable text content in XML
+                // DOCX files are ZIP archives containing XML files
                 try {
-                    // Simple extraction of readable text from DOCX buffer with formatting
+                    // Simple extraction of readable text from DOCX buffer
                     const array = new Uint8Array(arrayBuffer);
                     let textContent = '';
                     
@@ -1250,11 +1251,12 @@ class NotepadApp {
                         
                         if (found) {
                             // We found a document.xml reference, now look for actual content
+                            // Usually <w:t> tags contain the actual text content
                             const contentStart = i + 200; // Skip ahead to likely content area
                             let contentFragment = '';
                             
                             // Extract and decode text in chunks
-                            for (let k = contentStart; k < Math.min(contentStart + 300000, array.length); k++) {
+                            for (let k = contentStart; k < Math.min(contentStart + 100000, array.length); k++) {
                                 // Only include readable ASCII characters
                                 if (array[k] >= 32 && array[k] <= 126) { 
                                     contentFragment += String.fromCharCode(array[k]);
@@ -1266,204 +1268,17 @@ class NotepadApp {
                             
                             if (paragraphs.length > 0) {
                                 // Process XML paragraph tags
-                                let currentParagraph = '';
-                                let inParagraph = false;
-                                let paragraphStyle = '';
-                                let inHeading = false;
-                                let inList = false;
-                                let listType = '';
-                                let formattedParagraphs = [];
-                                let currentStyle = {
-                                    bold: false,
-                                    italic: false,
-                                    underline: false,
-                                    color: '',
-                                    size: '',
-                                    align: ''
-                                };
+                                const parsedContent = paragraphs
+                                    .map(p => p.replace(/<[^>]+>/g, '')) // Remove XML tags
+                                    .join(' ')
+                                    .replace(/\s+/g, ' '); // Normalize whitespace
                                 
-                                // Look for paragraph, heading, and list markers
-                                const paragraphMarkers = contentFragment.match(/<w:p[^>]*>/g) || [];
-                                const styleMarkers = contentFragment.match(/<w:pStyle[^>]*w:val="([^"]*)"[^>]*>/g) || [];
-                                
-                                // Extract formatting elements
-                                const boldMarkers = contentFragment.match(/<w:b[^/>]*\/>/g) || [];
-                                const italicMarkers = contentFragment.match(/<w:i[^/>]*\/>/g) || [];
-                                const underlineMarkers = contentFragment.match(/<w:u[^/>]*\/>/g) || [];
-                                const colorMarkers = contentFragment.match(/<w:color[^>]*w:val="([^"]*)"[^>]*>/g) || [];
-                                const fontSizeMarkers = contentFragment.match(/<w:sz[^>]*w:val="([^"]*)"[^>]*>/g) || [];
-                                const alignMarkers = contentFragment.match(/<w:jc[^>]*w:val="([^"]*)"[^>]*>/g) || [];
-                                
-                                // Extract paragraph texts with better handling of formatting
-                                for (let i = 0; i < paragraphs.length; i++) {
-                                    const text = paragraphs[i].replace(/<[^>]+>/g, '');
-                                    
-                                    // Detect if we're starting a new paragraph
-                                    if (!inParagraph || text.trim().length > 0) {
-                                        // Check if we're in a special paragraph type by looking at the context
-                                        let contextBefore = contentFragment.substring(
-                                            Math.max(0, contentFragment.indexOf(paragraphs[i]) - 500),
-                                            contentFragment.indexOf(paragraphs[i])
-                                        );
-                                        
-                                        // Reset paragraph state when we detect a new paragraph
-                                        if (contextBefore.includes('<w:p ') || contextBefore.includes('<w:p>')) {
-                                            if (inParagraph && currentParagraph.trim()) {
-                                                // Apply formatting to the paragraph
-                                                let formattedParagraph = currentParagraph;
-                                                
-                                                // Apply styles
-                                                if (currentStyle.bold) formattedParagraph = `<strong>${formattedParagraph}</strong>`;
-                                                if (currentStyle.italic) formattedParagraph = `<em>${formattedParagraph}</em>`;
-                                                if (currentStyle.underline) formattedParagraph = `<u>${formattedParagraph}</u>`;
-                                                if (currentStyle.color) formattedParagraph = `<span style="color:${currentStyle.color}">${formattedParagraph}</span>`;
-                                                if (currentStyle.size) formattedParagraph = `<span style="font-size:${parseInt(currentStyle.size)/2}pt">${formattedParagraph}</span>`;
-                                                
-                                                // Save the previous paragraph with appropriate formatting
-                                                if (inHeading) {
-                                                    const hLevel = Math.min(parseInt(paragraphStyle.replace(/[^\d]/g, '') || '2'), 6);
-                                                    formattedParagraphs.push(`<h${hLevel} style="${currentStyle.align ? 'text-align:'+currentStyle.align+';' : ''}">${formattedParagraph}</h${hLevel}>`);
-                                                } else if (inList) {
-                                                    if (listType === 'bullet') {
-                                                        formattedParagraphs.push(`<ul><li>${formattedParagraph}</li></ul>`);
-                                                    } else {
-                                                        formattedParagraphs.push(`<ol><li>${formattedParagraph}</li></ol>`);
-                                                    }
-                                                } else {
-                                                    formattedParagraphs.push(`<p style="${currentStyle.align ? 'text-align:'+currentStyle.align+';' : ''}">${formattedParagraph}</p>`);
-                                                }
-                                            }
-                                            
-                                            // Reset for new paragraph
-                                            currentParagraph = '';
-                                            inParagraph = true;
-                                            
-                                            // Reset style for new paragraph
-                                            currentStyle = {
-                                                bold: contextBefore.includes('<w:b ') || contextBefore.includes('<w:b/>'),
-                                                italic: contextBefore.includes('<w:i ') || contextBefore.includes('<w:i/>'),
-                                                underline: contextBefore.includes('<w:u ') || contextBefore.includes('<w:u '),
-                                                color: '',
-                                                size: '',
-                                                align: ''
-                                            };
-                                            
-                                            // Look for color information
-                                            const colorMatch = contextBefore.match(/<w:color[^>]*w:val="([^"]*)"[^>]*>/);
-                                            if (colorMatch && colorMatch[1]) {
-                                                currentStyle.color = '#' + colorMatch[1];
-                                            }
-                                            
-                                            // Look for size information
-                                            const sizeMatch = contextBefore.match(/<w:sz[^>]*w:val="([^"]*)"[^>]*>/);
-                                            if (sizeMatch && sizeMatch[1]) {
-                                                currentStyle.size = sizeMatch[1];
-                                            }
-                                            
-                                            // Look for alignment information
-                                            const alignMatch = contextBefore.match(/<w:jc[^>]*w:val="([^"]*)"[^>]*>/);
-                                            if (alignMatch && alignMatch[1]) {
-                                                const align = alignMatch[1];
-                                                if (align === 'center') currentStyle.align = 'center';
-                                                else if (align === 'right') currentStyle.align = 'right';
-                                                else if (align === 'justify') currentStyle.align = 'justify';
-                                                else currentStyle.align = 'left';
-                                            }
-                                            
-                                            // Detect paragraph style
-                                            paragraphStyle = '';
-                                            inHeading = false;
-                                            inList = false;
-                                            
-                                            // Check for style information
-                                            const styleMatch = contextBefore.match(/<w:pStyle[^>]*w:val="([^"]*)"[^>]*>/);
-                                            if (styleMatch && styleMatch[1]) {
-                                                paragraphStyle = styleMatch[1];
-                                                if (paragraphStyle.includes('Heading')) {
-                                                    inHeading = true;
-                                                } else if (paragraphStyle.includes('ListParagraph')) {
-                                                    inList = true;
-                                                    if (contextBefore.includes('bullet')) {
-                                                        listType = 'bullet';
-                                                    } else {
-                                                        listType = 'number';
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        
-                                        // Add space between words if needed
-                                        if (currentParagraph && !currentParagraph.endsWith(' ') && text.trim()) {
-                                            currentParagraph += ' ';
-                                        }
-                                        
-                                        // Add content to current paragraph
-                                        currentParagraph += text;
-                                    }
-                                }
-                                
-                                // Add the last paragraph
-                                if (currentParagraph.trim()) {
-                                    // Apply formatting to the last paragraph
-                                    let formattedParagraph = currentParagraph;
-                                    
-                                    // Apply styles
-                                    if (currentStyle.bold) formattedParagraph = `<strong>${formattedParagraph}</strong>`;
-                                    if (currentStyle.italic) formattedParagraph = `<em>${formattedParagraph}</em>`;
-                                    if (currentStyle.underline) formattedParagraph = `<u>${formattedParagraph}</u>`;
-                                    if (currentStyle.color) formattedParagraph = `<span style="color:${currentStyle.color}">${formattedParagraph}</span>`;
-                                    if (currentStyle.size) formattedParagraph = `<span style="font-size:${parseInt(currentStyle.size)/2}pt">${formattedParagraph}</span>`;
-                                    
-                                    if (inHeading) {
-                                        const hLevel = Math.min(parseInt(paragraphStyle.replace(/[^\d]/g, '') || '2'), 6);
-                                        formattedParagraphs.push(`<h${hLevel} style="${currentStyle.align ? 'text-align:'+currentStyle.align+';' : ''}">${formattedParagraph}</h${hLevel}>`);
-                                    } else if (inList) {
-                                        if (listType === 'bullet') {
-                                            formattedParagraphs.push(`<ul><li>${formattedParagraph}</li></ul>`);
-                                        } else {
-                                            formattedParagraphs.push(`<ol><li>${formattedParagraph}</li></ol>`);
-                                        }
-                                    } else {
-                                        formattedParagraphs.push(`<p style="${currentStyle.align ? 'text-align:'+currentStyle.align+';' : ''}">${formattedParagraph}</p>`);
-                                    }
-                                }
-                                
-                                // Combine adjacent list items
-                                let finalHtml = '';
-                                let inUl = false;
-                                let inOl = false;
-                                
-                                formattedParagraphs.forEach(p => {
-                                    if (p.startsWith('<ul>')) {
-                                        if (!inUl) {
-                                            inUl = true;
-                                            finalHtml += '<ul>';
-                                        }
-                                        finalHtml += p.replace('<ul>', '').replace('</ul>', '');
-                                    } else if (p.startsWith('<ol>')) {
-                                        if (!inOl) {
-                                            inOl = true;
-                                            finalHtml += '<ol>';
-                                        }
-                                        finalHtml += p.replace('<ol>', '').replace('</ol>', '');
-                                    } else {
-                                        if (inUl) {
-                                            inUl = false;
-                                            finalHtml += '</ul>';
-                                        }
-                                        if (inOl) {
-                                            inOl = false;
-                                            finalHtml += '</ol>';
-                                        }
-                                        finalHtml += p;
-                                    }
-                                });
-                                
-                                // Close any open lists
-                                if (inUl) finalHtml += '</ul>';
-                                if (inOl) finalHtml += '</ol>';
-                                
-                                textContent = finalHtml;
+                                // Add paragraph structure
+                                textContent += parsedContent.split('. ')
+                                    .map(sentence => sentence.trim())
+                                    .filter(sentence => sentence.length > 0)
+                                    .map(sentence => `<p>${sentence}${!sentence.endsWith('.') ? '.' : ''}</p>`)
+                                    .join('');
                             }
                             
                             break;
@@ -1471,8 +1286,6 @@ class NotepadApp {
                     }
                     
                     if (textContent.length > 0) {
-                        // Add a message to the user
-                        textContent += '<div class="conversion-note">Note: Some complex formatting might be simplified during import.</div>';
                         resolve(textContent);
                     } else {
                         // No structured content found, try fallback
@@ -2492,7 +2305,7 @@ class NotepadApp {
                 emojis = ['⚽', '🏀', '🏈', '⚾', '🎾', '🏐', '🏉', '🎱', '🏓', '🏸', '🏒', '🏑', '🏏', '⛳', '🎣', '🥊', '🥋', '🎽', '🛹', '🎿', '🏂', '🏋️', '⛹️', '🤺', '🏌️', '🏇', '🧘', '🏄', '🏊', '🤽', '🚣', '🧗', '🚵', '🚴', '🏆', '🥇', '🥈', '🥉', '🏅', '🎖️', '🏵️', '🎗️', '🎫', '🎟️', '🎪', '🎭', '🎨', '🎬', '🎤', '🎧', '🎼', '🎹', '🥁', '🎷', '🎺', '🎸', '🎻'];
                 break;
             case 'objects':
-                emojis = ['🎭', '👓', '🕶️', '👔', '👕', '👖', '🧣', '🧤', '🧥', '🧦', '👗', '👘', '👙', '👚', '👛', '👜', '👝', '🛍️', '🎒', '👞', '👟', '👠', '👡', '👢', '👑', '👒', '🎩', '📚', '📰', '📺', '📻', '📱', '📞', '📝', '📁', '📂', '🗑️', '🚮', '📦', '📧', '📨', '📩', '📪', '📫', '📬', '📭', '📮', '📯', '📰', '🗞️', '📰', '📺', '📻', '📱', '📞', '📝', '📁', '📂', '🗑️', '🚮', '📦', '📧', '📨', '📩', '📪', '📫', '📬', '📭', '📮', '📯'];
+                emojis = ['🎭', '👓', '🕶️', '👔', '👕', '👖', '🧣', '🧤', '🧥', '🧦', '👗', '👘', '👙', '👚', '👛', '👜', '👝', '🛍️', '🎒', '👞', '👟', '👠', '👡', '👢', '👑', '👒', '🎩', '🎓', '🧢', '⛑️', '📿', '💄', '💍', '💎', '🔇', '🔈', '🔉', '🔊', '📢', '📣', '📯', '🔔', '🔕', '🎼', '🎵', '🎶', '🎙️', '🎚️', '🎛️', '🎤', '🎧', '📻', '🎷', '🎸', '🎹', '🎺', '🎻', '🥁'];
                 break;
             case 'symbols':
                 emojis = ['❤️', '🧡', '💛', '💚', '💙', '💜', '🖤', '🤍', '🤎', '💔', '❣️', '💕', '💞', '💓', '💗', '💖', '💘', '💝', '💟', '☮️', '✝️', '☪️', '🕉️', '☸️', '✡️', '🔯', '🕎', '☯️', '☦️', '🛐', '⛎', '♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓', '🆔', '⚛️', '🉑', '☢️', '☣️', '📴', '📳', '🈶', '🈚', '🈸', '🈺', '🈷️', '✴️', '🆚', '💮', '🉐', '㊙️', '㊗️', '🈴', '🈵', '🈹', '🈲', '🅰️', '🅱️', '🆎', '🆑', '🅾️', '🆘', '❌', '⭕', '🛑', '⛔', '📛', '🚫', '💯', '💢', '♨️', '🚷', '🚯', '🚳', '🚱', '🔞', '📵', '🚭', '❗', '❕', '❓', '❔', '‼️', '⁉️', '🔅', '🔆', '⚠️', '🚸', '🔱', '⚜️', '🔰', '♻️', '✅', '🈯', '💹', '❇️', '✳️', '❎', '🌐', '💠', 'Ⓜ️', '🌀', '💤', '🏧', '🚾', '♿', '🅿️', '🈳', '🈂️', '🛂', '🛃', '🛄', '🛅', '🚹', '🚺', '🚼', '🚻', '🚮', '🎦', '📶', '🈁', 'ℹ️', '🔤', '🔡', '🔠', '🆖', '🆗', '🆙', '🆒', '🆕', '🆓', '0️⃣', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟', '#️⃣', '*️⃣', '▶️', '⏸️', '⏯️', '⏹️', '⏺️', '⏭️', '⏮️', '⏩', '⏪', '⏫', '⏬', '◀️', '🔼', '🔽', '➡️', '⬅️', '⬆️', '⬇️', '↗️', '↘️', '↙️', '↖️', '↕️', '↔️', '↪️', '↩️', '⤴️', '⤵️', '🔀', '🔁', '🔂', '🔄', '🔃', '➕', '➖', '➗', '✖️', '💲', '💱'];
@@ -2521,9 +2334,6 @@ class NotepadApp {
     toggleFullscreen() {
         const container = document.querySelector('.notepad-container');
         container.classList.toggle('fullscreen-mode');
-        
-        // Add or remove fullscreen-active class on body
-        document.body.classList.toggle('fullscreen-active');
         
         const button = document.querySelector('[data-action="fullscreen"] i');
         if (container.classList.contains('fullscreen-mode')) {
