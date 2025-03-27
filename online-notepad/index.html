@@ -64,9 +64,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
-    <div class="ad-container top-ad">
-        <div class="ad-placeholder">Advertisement</div>
-    </div>
+    <header class="site-header">
+        <a href="/" class="site-logo">Online Notepad</a>
+        <button class="home-button" onclick="window.location='/'">
+            <i class="ri-home-4-line"></i>
+            Return to Homepage
+        </button>
+    </header>
     <div class="saved-files-container" id="savedFilesContainer">
         <div class="saved-files-header">
             <h3>Saved Notes</h3>
@@ -271,9 +275,6 @@
                 <div id="notepad" contenteditable="true" spellcheck="true" placeholder="Start typing your notes here..."></div>
             </div>
         </div>
-    </div>
-    <div class="ad-container bottom-ad">
-        <div class="ad-placeholder">Advertisement</div>
     </div>
     <div class="tool-description">
         <h1>Free Online Notepad: Write, Save, and Share Your Notes</h1>
