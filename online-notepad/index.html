@@ -1,1875 +1,462 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
-
-:root {
-    --bg-primary: #f8f9fa;
-    --bg-secondary: #ffffff;
-    --text-primary: #2d3748;
-    --accent-color: #6366f1;  
-    --accent-hover: #4f46e5;  
-    --border-color: #e9ecef;
-    --soft-shadow: 0 10px 25px rgba(0,0,0,0.05);  
-    --transition-speed: 0.3s;
-    --gradient-bg: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);  
-}
-
-.dark-theme {
-    --bg-primary: #1a202c;
-    --bg-secondary: #2d3748;
-    --text-primary: #e2e8f0;
-    --border-color: #4a5568;
-    --soft-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    --gradient-bg: linear-gradient(135deg, #1a202c 0%, #2c3344 100%);
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-    background: var(--gradient-bg);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    color: var(--text-primary);
-    line-height: 1.6;
-    padding: 20px 0 !important;
-}
-
-body.fullscreen-active {
-    overflow: hidden;
-}
-
-body.fullscreen-active .site-header,
-body.fullscreen-active .saved-files-container,
-body.fullscreen-active .tool-description,
-body.fullscreen-active .guide-section,
-body.fullscreen-active .footer {
-    display: none;
-}
-
-.site-header {
-    width: 100%;
-    background-color: var(--bg-secondary);
-    padding: 15px 20px;
-    box-shadow: var(--soft-shadow);
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--border-color);
-    background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(99, 102, 241, 0.08) 100%);
-}
-
-.site-logo {
-    margin-left: 10px;
-    font-size: 24px;
-    font-weight: 600;
-    color: var(--accent-color);
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    transition: transform 0.2s;
-}
-
-.site-logo:before {
-    content: "📝";
-    margin-right: 10px;
-    font-size: 28px;
-}
-
-.site-logo:hover {
-    transform: translateY(-2px);
-}
-
-.home-button {
-    margin-right: 10px;
-    padding: 10px 20px;
-    background-color: var(--accent-color);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-}
-
-.home-button:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: 0.5s;
-    z-index: -1;
-}
-
-.home-button:hover {
-    background-color: var(--accent-hover);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(99, 102, 241, 0.4);
-}
-
-.home-button:hover:after {
-    left: 100%;
-}
-
-.home-button i {
-    font-size: 20px;
-    transition: transform 0.3s;
-}
-
-.home-button:hover i {
-    transform: translateX(-3px);
-}
-
-.main-content {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    max-width: 1600px;
-    gap: 20px;
-}
-
-.ad-container {
-    display: none;
-}
-
-.top-ad {
-    width: 90%;
-    max-width: 1100px;
-    height: 90px;
-    margin-bottom: 40px;
-}
-
-.bottom-ad {
-    width: 90%;
-    max-width: 1100px;
-    height: 120px;
-    margin-top: 40px;
-}
-
-.left-sidebar, .right-sidebar {
-    width: 160px;
-    height: 600px;
-    align-self: flex-start;
-}
-
-.ad-placeholder {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(106, 90, 223, 0.05);
-    color: #999;
-    font-size: 14px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.dark-theme .ad-placeholder {
-    background-color: rgba(106, 90, 223, 0.15);
-    color: #bbb;
-}
-
-.notepad-container {
-    width: 90%;  
-    max-width: 1100px;  
-    background-color: var(--bg-secondary);
-    border-radius: 24px;  
-    box-shadow: var(--soft-shadow);
-    overflow: hidden;
-    border: 1px solid rgba(0,0,0,0.03);
-    margin-top: 20px;
-    transform: translateY(-20px);
-    transition: all var(--transition-speed) ease;
-    min-height: 80vh;  
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.dark-theme .notepad-container {
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    border-color: var(--border-color);
-}
-
-.notepad-container.fullscreen-mode {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-    border-radius: 0;
-    transform: none;
-    z-index: 9999;
-    display: flex;
-    flex-direction: column;
-    max-width: 100%; 
-    overflow: hidden; 
-    background-color: var(--bg-secondary);
-}
-
-.notepad-container.fullscreen-mode .toolbar {
-    border-radius: 0;
-    padding: 10px 15px;
-}
-
-.notepad-container.fullscreen-mode .editor-container {
-    flex: 1;
-    overflow: hidden; 
-    display: flex;
-    flex-direction: column;
-}
-
-.notepad-container.fullscreen-mode #notepad {
-    min-height: 0;
-    max-height: calc(100vh - 100px) !important;
-    padding: 30px;
-    flex: 1;
-    overflow-y: auto !important;
-    box-sizing: border-box; 
-}
-
-.notepad-container:fullscreen {
-    width: 100%;
-    max-width: 100%;
-    border-radius: 0;
-    transform: none;
-    margin: 0;
-    padding: 0;
-    box-shadow: none;
-    border: none;
-    min-height: 100vh;
-}
-
-.notepad-container:hover {
-    box-shadow: 0 20px 50px rgba(0,0,0,0.12);  
-    transform: translateY(-25px);  
-}
-
-.toolbar {
-    display: flex;
-    background-color: var(--bg-primary);
-    padding: 10px 15px;
-    gap: 8px;
-    border-bottom: 1px solid var(--border-color);
-    flex-wrap: wrap;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    border-radius: 20px 20px 0 0;
-    overflow-x: auto;
-    justify-content: center;
-}
-
-.toolbar-group {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    flex-shrink: 0;
-    background-color: rgba(255, 255, 255, 0.4);
-    padding: 3px;
-    border-radius: 8px;
-    border: 1px solid rgba(0,0,0,0.03);
-}
-
-.dark-theme .toolbar-group {
-    background-color: rgba(0, 0, 0, 0.1);
-}
-
-.toolbar-btn {
-    background: none;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    cursor: pointer;
-    color: var(--text-primary);
-    padding: 6px;
-    transition: all 0.2s ease;
-    opacity: 0.8;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 32px;
-    min-height: 32px;
-    background-color: var(--bg-secondary);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-}
-
-.toolbar-btn i {
-    font-size: 16px;
-}
-
-.toolbar-btn:hover {
-    background-color: rgba(99, 102, 241, 0.1);
-    opacity: 1;
-    color: var(--accent-color);
-    transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-}
-
-.toolbar-btn.active {
-    background-color: rgba(99, 102, 241, 0.18);
-    color: var(--accent-color);
-    opacity: 1;
-    border-color: var(--accent-color);
-    font-weight: 500;
-}
-
-.dark-theme .toolbar-btn {
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.dark-theme .toolbar-btn:hover {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-}
-
-.color-input {
-    height: 34px;
-    width: 34px;
-    padding: 0;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    overflow: hidden;
-    background-color: transparent;
-    cursor: pointer;
-}
-
-.color-input::-webkit-color-swatch-wrapper {
-    padding: 0;
-}
-
-.color-input::-webkit-color-swatch {
-    border: none;
-}
-
-.font-selector, .font-size-selector {
-    padding: 6px 10px;
-    border-radius: 6px;
-    border: 1px solid var(--border-color);
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    font-family: 'Inter', sans-serif;
-    cursor: pointer;
-    transition: all var(--transition-speed) ease;
-    min-width: 150px;
-    outline: none;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236a5adf' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    padding-right: 30px;
-    font-size: 13px;
-}
-
-.font-size-selector {
-    min-width: 80px;
-}
-
-.font-selector:hover, .font-selector:focus, .font-size-selector:hover, .font-size-selector:focus {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 2px rgba(106, 90, 223, 0.2);
-}
-
-.font-selector option, .font-size-selector option {
-    padding: 10px;
-}
-
-.dark-theme .font-selector, 
-.dark-theme .font-size-selector {
-    background-color: #2d3748;
-    color: #e2e8f0;
-    border-color: #4a5568;
-}
-
-#notepad {
-    width: 100%;
-    min-height: 600px;  
-    max-height: 75vh;
-    border: none;
-    font-size: 19px;  
-    line-height: 1.9;  
-    background-color: transparent;
-    outline: none;
-    font-family: 'Inter', sans-serif;
-    color: var(--text-primary);
-    padding: 25px 30px;
-    overflow-y: auto;
-    white-space: pre-wrap;
-}
-
-#notepad:empty:before {
-    content: attr(placeholder);
-    color: #888;
-    pointer-events: none;
-}
-
-#notepad:focus {
-    outline: 3px solid rgba(106, 90, 223, 0.2);
-    outline-offset: 8px;
-    border-radius: 8px;
-}
-
-#notepad::-webkit-scrollbar {
-    width: 8px;
-}
-
-#notepad::-webkit-scrollbar-track {
-    background: var(--bg-primary);
-}
-
-#notepad::-webkit-scrollbar-thumb {
-    background-color: var(--accent-color);
-    border-radius: 4px;
-}
-
-#notepad table {
-    border-collapse: collapse;
-    width: 100%;
-    margin: 15px 0;
-}
-
-#notepad th, #notepad td {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
-
-#notepad th {
-    background-color: #f5f5f5;
-    font-weight: bold;
-}
-
-.dark-theme #notepad th {
-    background-color: #2d3748;
-    border-color: #4a5568;
-}
-
-.dark-theme #notepad td {
-    border-color: #4a5568;
-}
-
-.save-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10001;
-    backdrop-filter: blur(5px);
-    animation: fadeIn 0.2s ease-out;
-}
-
-.save-modal-content {
-    background-color: var(--bg-secondary);
-    padding: 40px;
-    border-radius: 16px;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
-    width: 90%;
-    max-width: 450px;
-    text-align: center;
-    transform: translateY(0);
-    animation: slideUp 0.3s ease-out;
-}
-
-.save-modal-content h3 {
-    margin-bottom: 18px;
-    color: var(--text-primary);
-    font-size: 24px;
-    font-weight: 600;
-}
-
-.save-modal-content p {
-    margin-bottom: 30px;
-    color: #666;
-    font-size: 16px;
-}
-
-.save-modal-buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-    margin-top: 10px;
-}
-
-.save-modal-buttons button {
-    padding: 14px 20px;
-    border-radius: 12px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border: none;
-    font-size: 15px;
-    position: relative;
-    overflow: hidden;
-}
-
-.save-modal-buttons button::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: width 0.4s ease, height 0.4s ease;
-}
-
-.save-modal-buttons button:hover::before {
-    width: 300px;
-    height: 300px;
-}
-
-#modal-save {
-    background-color: var(--accent-color);
-    color: white;
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
-    box-shadow: 0 4px 12px rgba(106, 90, 223, 0.3);
-}
-
-#modal-save:hover {
-    background-color: var(--accent-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(106, 90, 223, 0.4);
-}
-
-#modal-discard {
-    background-color: #f44336;
-    color: white;
-    grid-column: 1 / 2;
-    grid-row: 2 / 3;
-    box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
-}
-
-#modal-discard:hover {
-    background-color: #d32f2f;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(244, 67, 54, 0.4);
-}
-
-#modal-export {
-    background-color: #4caf50;
-    color: white;
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
-    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
-}
-
-#modal-export:hover {
-    background-color: #388e3c;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
-}
-
-#modal-cancel {
-    background-color: #f5f5f5;
-    color: #333;
-    grid-column: 2 / 3;
-    grid-row: 2 / 3;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-#modal-cancel:hover {
-    background-color: #e0e0e0;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes slideUp {
-    from { transform: translateY(30px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-.code-modal, .table-modal {
-    max-width: 600px;
-}
-
-.form-group textarea {
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    font-size: 14px;
-    font-family: monospace;
-    resize: vertical;
-    min-height: 150px;
-}
-
-.form-group input[type="checkbox"] {
-    width: auto;
-    margin-right: 8px;
-}
-
-.dark-theme pre, .dark-theme code {
-    background-color: #2d3748 !important;
-    border-color: #4a5568 !important;
-    color: #e2e8f0 !important;
-}
-
-.color-picker {
-    width: 45px;
-    height: 45px;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    border-radius: 8px;
-    overflow: hidden;
-    position: relative;
-    padding: 0;
-    -webkit-appearance: none;
-}
-
-.color-picker::-webkit-color-swatch-wrapper {
-    padding: 0;
-}
-
-.color-picker::-webkit-color-swatch {
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 0 0 1px var(--border-color);
-}
-
-.toast {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: var(--bg-secondary);
-    border-radius: 12px;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-    padding: 15px 20px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    z-index: 2500;
-    min-width: 300px;
-    border: 1px solid var(--border-color);
-    animation: toastIn 0.5s ease-out;
-    transition: all 0.5s ease;
-}
-
-.toast-success {
-    border-left: 5px solid #4caf50;
-}
-
-.toast-error {
-    border-left: 5px solid #f44336;
-}
-
-.toast-warning {
-    border-left: 5px solid #ff9800;
-}
-
-.toast-content {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    flex-grow: 1;
-}
-
-.toast-content i {
-    font-size: 24px;
-    color: var(--accent-color);
-}
-
-.toast-progress {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 4px;
-    background-color: var(--accent-color);
-    width: 100%;
-    animation: toastProgress 3s linear;
-}
-
-.toast-exit {
-    opacity: 0;
-    transform: translateX(100%);
-}
-
-@keyframes toastIn {
-    from { 
-        opacity: 0;
-        transform: translateX(100%);
-    }
-    to { 
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes toastProgress {
-    from { width: 100%; }
-    to { width: 0%; }
-}
-
-.saved-files-container {
-    width: 90%;
-    max-width: 1100px;
-    background-color: var(--bg-secondary);
-    border-radius: 15px;
-    box-shadow: var(--soft-shadow);
-    overflow: hidden;
-    margin-bottom: 20px;
-    border: 1px solid var(--border-color);
-    transition: height 0.3s ease;
-}
-
-.dark-theme .saved-files-container {
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    border-color: var(--border-color);
-}
-
-.saved-files-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    background-color: var(--bg-primary);
-    border-bottom: 1px solid var(--border-color);
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.saved-files-header:hover {
-    background-color: rgba(106, 90, 223, 0.1);
-}
-
-.saved-files-header h3 {
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin: 0;
-}
-
-.toggle-saved-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--text-primary);
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-    background-color: var(--bg-primary);
-}
-
-.toggle-saved-btn:hover {
-    background-color: rgba(106, 90, 223, 0.12);
-    color: var(--accent-color);
-}
-
-.toggle-saved-btn i {
-    font-size: 20px;
-    transition: transform 0.3s ease;
-}
-
-.toggle-saved-btn.collapsed i {
-    transform: rotate(180deg);
-}
-
-.saved-files-list {
-    display: none;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    padding: 15px;
-    gap: 15px;
-    scroll-behavior: smooth;
-    min-height: 100px;
-}
-
-.saved-files-list::-webkit-scrollbar {
-    height: 8px;
-}
-
-.saved-files-list::-webkit-scrollbar-track {
-    background: var(--bg-primary);
-    border-radius: 4px;
-}
-
-.saved-files-list::-webkit-scrollbar-thumb {
-    background-color: var(--accent-color);
-    border-radius: 4px;
-}
-
-.saved-file-card {
-    min-width: 200px;
-    max-width: 200px;
-    height: 160px;
-    background-color: var(--bg-primary);
-    border-radius: 12px;
-    padding: 15px;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--border-color);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.saved-file-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    border-color: var(--accent-color);
-}
-
-.saved-file-card.active {
-    border: 2px solid var(--accent-color);
-    background-color: rgba(106, 90, 223, 0.05);
-}
-
-.saved-file-title {
-    font-weight: 600;
-    font-size: 16px;
-    margin-bottom: 10px;
-    color: var(--text-primary);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.saved-file-preview {
-    flex-grow: 1;
-    font-size: 13px;
-    color: #666;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-}
-
-.saved-file-date {
-    font-size: 12px;
-    color: #888;
-    margin-top: 10px;
-}
-
-.saved-file-actions {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    display: flex;
-    gap: 5px;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-}
-
-.saved-file-card:hover .saved-file-actions {
-    opacity: 1;
-}
-
-.file-action-btn {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background-color: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.file-action-btn:hover {
-    background-color: var(--accent-color);
-    color: white;
-}
-
-.rename-modal {
-    max-width: 400px;
-}
-
-.rename-input {
-    width: 100%;
-    padding: 14px;
-    border-radius: 10px;
-    border: 1px solid var(--border-color);
-    font-size: 16px;
-    margin-bottom: 20px;
-    font-family: 'Inter', sans-serif;
-}
-
-.rename-input:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 2px rgba(106, 90, 223, 0.2);
-}
-
-.rename-buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-
-#modal-rename {
-    background-color: var(--accent-color);
-    color: white;
-    box-shadow: 0 4px 12px rgba(106, 90, 223, 0.3);
-}
-
-#modal-rename:hover {
-    background-color: var(--accent-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(106, 90, 223, 0.4);
-}
-
-#modal-cancel-rename {
-    background-color: #f5f5f5;
-    color: #333;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-#modal-cancel-rename:hover {
-    background-color: #e0e0e0;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-}
-
-.format-options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
-    justify-content: center;
-}
-
-.format-option {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid var(--border-color);
-    cursor: pointer;
-    transition: all 0.2s ease;
-    background-color: var(--bg-primary);
-    width: 110px;
-    text-align: center;
-}
-
-.format-option i {
-    font-size: 24px;
-    margin-bottom: 8px;
-    color: var(--accent-color);
-}
-
-.format-option span {
-    font-size: 14px;
-}
-
-.format-option:hover {
-    border-color: var(--accent-color);
-    background-color: rgba(106, 90, 223, 0.05);
-    transform: translateY(-3px);
-}
-
-.download-format-modal h3 {
-    margin-bottom: 20px;
-}
-
-.format-options.horizontal {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.emoji-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: var(--bg-secondary);
-    border-radius: 16px;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
-    padding: 25px;
-    width: 90%;
-    max-width: 700px;
-    max-height: 80vh;
-    overflow-y: auto;
-    z-index: 10000;
-}
-
-.emoji-modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.emoji-modal-header h3 {
-    font-size: 20px;
-    font-weight: 600;
-}
-
-.emoji-close-btn {
-    background: none;
-    border: none;
-    font-size: 22px;
-    cursor: pointer;
-    color: #666;
-    transition: color 0.2s;
-}
-
-.emoji-close-btn:hover {
-    color: var(--accent-color);
-}
-
-.emoji-tabs {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-    border-bottom: 1px solid var(--border-color);
-    overflow-x: auto;
-    padding-bottom: 10px;
-}
-
-.emoji-tab {
-    padding: 10px 15px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.2s;
-    white-space: nowrap;
-}
-
-.emoji-tab.active {
-    background-color: var(--accent-color);
-    color: white;
-}
-
-.emoji-tab:hover:not(.active) {
-    background-color: rgba(106, 90, 223, 0.1);
-}
-
-.emoji-grid {
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    gap: 10px;
-}
-
-.emoji-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    cursor: pointer;
-    height: 50px;
-    border-radius: 8px;
-    transition: all 0.2s;
-}
-
-.emoji-item:hover {
-    background-color: rgba(106, 90, 223, 0.1);
-    transform: scale(1.2);
-}
-
-.special-char-grid {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    gap: 10px;
-}
-
-.special-char-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 20px;
-    cursor: pointer;
-    height: 40px;
-    border-radius: 8px;
-    transition: all 0.2s;
-    border: 1px solid var(--border-color);
-}
-
-.special-char-item:hover {
-    background-color: rgba(106, 90, 223, 0.1);
-    border-color: var(--accent-color);
-}
-
-.emoji-search {
-    width: 100%;
-    padding: 12px 15px;
-    border-radius: 10px;
-    border: 1px solid var(--border-color);
-    margin-bottom: 20px;
-    font-family: 'Inter', sans-serif;
-}
-
-.emoji-search:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 2px rgba(106, 90, 223, 0.2);
-}
-
-.emoji-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(3px);
-    z-index: 10000;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 500;
-    color: var(--text-primary);
-    text-align: left;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    font-size: 15px;
-    transition: all 0.2s;
-}
-
-.form-group input:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 2px rgba(106, 90, 223, 0.2);
-}
-
-.form-group input.error {
-    border-color: #f44336;
-    background-color: rgba(244, 67, 54, 0.05);
-}
-
-.form-group input[type="file"] {
-    padding: 10px 0;
-    border: none;
-    width: 100%;
-    background-color: var(--bg-secondary);
-    cursor: pointer;
-}
-
-.form-group input[type="file"]:focus {
-    outline: none;
-}
-
-.form-group input[type="file"].error {
-    color: #f44336;
-}
-
-.dark-theme .form-group input {
-    background-color: #2d3748;
-    color: #e2e8f0;
-    border-color: #4a5568;
-}
-
-.link-modal, .image-modal {
-    max-width: 500px;
-}
-
-.link-form, .image-form {
-    margin-bottom: 20px;
-    text-align: left;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-}
-
-#notepad a {
-    color: var(--accent-color);
-    text-decoration: underline;
-    transition: all 0.2s;
-}
-
-#notepad a:hover {
-    opacity: 0.8;
-}
-
-#insert-link-btn, #insert-image-btn {
-    background-color: var(--accent-color);
-    color: white;
-    box-shadow: 0 4px 12px rgba(106, 90, 223, 0.3);
-}
-
-#insert-link-btn:hover, #insert-image-btn:hover {
-    background-color: var(--accent-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(106, 90, 223, 0.4);
-}
-
-#cancel-link-btn, #cancel-image-btn {
-    background-color: #f5f5f5;
-    color: #333;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-#cancel-link-btn:hover, #cancel-image-btn:hover {
-    background-color: #e0e0e0;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-}
-
-.tool-description {
-    width: 90%;
-    max-width: 1100px;
-    margin: 40px auto;
-    padding: 30px;
-    background-color: var(--bg-secondary);
-    border-radius: 20px;
-    box-shadow: var(--soft-shadow);
-    text-align: center;
-}
-
-.dark-theme .tool-description {
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    border-color: var(--border-color);
-}
-
-.tool-description h2 {
-    color: var(--accent-color);
-    margin-bottom: 20px;
-    font-size: 2rem;
-}
-
-.tool-description > p {
-    max-width: 800px;
-    margin: 0 auto 30px;
-    color: #666;
-    font-size: 1.1rem;
-    line-height: 1.6;
-}
-
-.dark-theme .tool-description > p {
-    color: #a0aec0;
-}
-
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 25px;
-    margin-top: 30px;
-}
-
-.feature {
-    background-color: var(--bg-primary);
-    border-radius: 16px;
-    padding: 25px;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.03);
-    border: 1px solid var(--border-color);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-}
-
-.dark-theme .feature {
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    border-color: var(--border-color);
-}
-
-.feature:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-    border-color: var(--accent-color);
-}
-
-.feature i {
-    font-size: 2.5rem;
-    color: var(--accent-color);
-    margin-bottom: 15px;
-    background-color: rgba(99, 102, 241, 0.1);
-    width: 70px;
-    height: 70px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-}
-
-.feature h3 {
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-    color: var(--text-primary);
-}
-
-.feature p {
-    color: #666;
-    font-size: 0.95rem;
-    line-height: 1.5;
-}
-
-.dark-theme .feature p {
-    color: #cbd5e0;
-}
-
-.guide-section {
-    width: 90%;
-    max-width: 1100px;
-    margin: 60px auto 80px;
-}
-
-.guide-container {
-    background-color: var(--bg-secondary);
-    border-radius: 24px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
-    padding: 50px;
-    border: 1px solid var(--border-color);
-    max-width: 1100px;
-    margin: 0 auto;
-}
-
-.dark-theme .guide-container {
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    border-color: var(--border-color);
-}
-
-.guide-title {
-    color: var(--accent-color);
-    margin-bottom: 40px;
-    font-size: 32px;
-    text-align: center;
-    position: relative;
-    padding-bottom: 20px;
-    font-weight: 700;
-}
-
-.guide-title:after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 4px;
-    background-color: var(--accent-color);
-    border-radius: 4px;
-}
-
-.guide-content {
-    text-align: left;
-    color: var(--text-primary);
-    line-height: 1.8;
-}
-
-.guide-content h3 {
-    font-size: 24px;
-    margin: 40px 0 24px;
-    color: var(--accent-color);
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 15px;
-    font-weight: 600;
-    letter-spacing: -0.5px;
-}
-
-.guide-content h3:first-child {
-    margin-top: 0;
-}
-
-.guide-content p {
-    margin-bottom: 20px;
-    line-height: 1.9;
-    font-size: 17px;
-    color: #4a5568;
-}
-
-.dark-theme .guide-content p {
-    color: #cbd5e0;
-}
-
-.faq-section {
-    margin-top: 50px;
-    border-top: 2px solid var(--border-color);
-    padding-top: 30px;
-}
-
-.faq-section h3 {
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 30px;
-    color: var(--accent-color);
-}
-
-.faq-item {
-    margin-bottom: 25px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 20px;
-}
-
-.faq-item:last-child {
-    border-bottom: none;
-}
-
-.faq-item h4 {
-    font-size: 18px;
-    margin-bottom: 10px;
-    color: var(--text-primary);
-}
-
-.faq-item p {
-    color: #555;
-    line-height: 1.6;
-}
-
-.dark-theme .faq-item p {
-    color: #cbd5e0;
-}
-
-.editor-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.conversion-note {
-    margin: 15px 0;
-    font-size: 14px;
-    color: #666;
-    text-align: center;
-    line-height: 1.5;
-    padding: 10px;
-    border-radius: 8px;
-    background-color: rgba(106, 90, 223, 0.05);
-}
-
-.dark-theme .conversion-note {
-    color: #a0aec0;
-    background-color: rgba(106, 90, 223, 0.1);
-}
-
-#convert-docx-btn {
-    background-color: #4a5568;
-    color: white;
-    box-shadow: 0 4px 12px rgba(74, 85, 104, 0.3);
-}
-
-#convert-docx-btn:hover {
-    background-color: #2d3748;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(74, 85, 104, 0.4);
-}
-
-.export-docx-btn {
-    background-color: var(--accent-color);
-    color: white;
-    box-shadow: 0 4px 12px rgba(106, 90, 223, 0.3);
-}
-
-.export-docx-btn:hover {
-    background-color: var(--accent-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(106, 90, 223, 0.4);
-}
-
-/* Context Menu Styles */
-.context-menu {
-    position: absolute;
-    background-color: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 5px 0;
-    z-index: 10002;
-}
-
-.context-menu-item {
-    padding: 8px 20px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    color: var(--text-primary);
-    white-space: nowrap;
-}
-
-.context-menu-item:hover {
-    background-color: var(--accent-color);
-    color: white;
-}
-
-.dark-theme .faq-item p {
-    color: #cbd5e0;
-}
-
-.more-formats-container {
-    border-top: 1px solid var(--border-color);
-    padding-top: 15px;
-}
-
-.show-more-formats {
-    background-color: var(--bg-primary);
-    border: 1px dashed var(--border-color);
-}
-
-.show-more-formats:hover {
-    background-color: rgba(106, 90, 223, 0.05);
-    border-color: var(--accent-color);
-}
-
-.find-replace-modal {
-    max-width: 500px;
-}
-
-.find-replace-modal .form-group {
-    margin-bottom: 15px;
-    text-align: left;
-}
-
-.find-replace-modal .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 500;
-}
-
-.find-replace-modal .form-group input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    font-size: 14px;
-}
-
-.find-replace-modal .form-group input[type="checkbox"] {
-    margin-right: 8px;
-}
-
-.find-replace-modal .save-modal-buttons {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-}
-
-#find-next-btn, #replace-btn, #replace-all-btn, #cancel-find-btn {
-    padding: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    border: none;
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
-
-#find-next-btn {
-    background-color: var(--accent-color);
-    color: white;
-    grid-column: 1 / 2;
-    grid-row: 1 / 2;
-}
-
-#replace-btn {
-    background-color: #4caf50;
-    color: white;
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
-}
-
-#replace-all-btn {
-    background-color: #ff9800;
-    color: white;
-    grid-column: 1 / 2;
-    grid-row: 2 / 3;
-}
-
-#cancel-find-btn {
-    background-color: #f5f5f5;
-    color: #333;
-    grid-column: 2 / 3;
-    grid-row: 2 / 3;
-}
-
-#find-next-btn:hover, #replace-btn:hover, #replace-all-btn:hover {
-    opacity: 0.9;
-    transform: translateY(-2px);
-}
-
-#cancel-find-btn:hover {
-    background-color: #e0e0e0;
-}
-
-.word-counter-container {
-    display: flex;
-    align-items: center;
-    margin-left: 10px;
-    padding: 5px 8px;
-    background-color: var(--bg-secondary);
-    border-radius: 6px;
-    border: 1px solid var(--border-color);
-    font-size: 12px;
-    color: var(--text-primary);
-}
-
-.dark-theme .word-counter-container {
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    border-color: var(--border-color);
-}
-
-.modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(5px);
-    z-index: 10000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    animation: fadeIn 0.2s ease-out;
-}
-
-.modal-container {
-    background-color: var(--bg-secondary);
-    border-radius: 16px;
-    box-shadow: 0 25px 50px rgba(0,0,0,0.2);
-    padding: 30px;
-    width: 90%;
-    max-width: 450px;
-    animation: slideUp 0.3s ease-out;
-}
-
-.modal-title {
-    font-size: 22px;
-    font-weight: 600;
-    margin-bottom: 15px;
-    color: var(--text-primary);
-}
-
-.modal-message {
-    margin-bottom: 25px;
-    color: #666;
-    line-height: 1.5;
-}
-
-.dark-theme .modal-message {
-    color: #a0aec0;
-}
-
-.modal-buttons {
-    display: flex;
-    gap: 12px;
-    justify-content: flex-end;
-}
-
-.modal-btn {
-    padding: 12px 20px;
-    border-radius: 12px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border: none;
-    font-size: 15px;
-}
-
-.modal-btn-primary {
-    background-color: var(--accent-color);
-    color: white;
-    box-shadow: 0 4px 12px rgba(106, 90, 223, 0.3);
-}
-
-.modal-btn-primary:hover {
-    background-color: var(--accent-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(106, 90, 223, 0.4);
-}
-
-.modal-btn-secondary {
-    background-color: #f5f5f5;
-    color: #333;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.modal-btn-secondary:hover {
-    background-color: #e0e0e0;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-}
-
-.modal-input {
-    width: 100%;
-    padding: 14px;
-    border-radius: 10px;
-    border: 1px solid var(--border-color);
-    font-size: 16px;
-    margin-bottom: 20px;
-    font-family: 'Inter', sans-serif;
-}
-
-.modal-input:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 2px rgba(106, 90, 223, 0.2);
-}
-
-.footer {
-    width: 100%;
-    background-color: var(--bg-secondary);
-    border-top: 1px solid var(--border-color);
-    padding: 20px 0;
-    text-align: center;
-    box-shadow: var(--soft-shadow);
-    margin-top: 40px;
-}
-
-.dark-theme .footer {
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    border-color: var(--border-color);
-}
-
-.footer-menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-.footer-menu li a {
-    color: var(--text-primary);
-    text-decoration: none;
-    transition: color 0.3s ease;
-    font-size: 15px;
-    position: relative;
-    padding: 5px 0;
-}
-
-.footer-menu li a:hover {
-    color: var(--accent-color);
-}
-
-.footer-menu li a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: var(--accent-color);
-    transition: width 0.3s ease;
-}
-
-.footer-menu li a:hover::after {
-    width: 100%;
-}
-
-.footer-menu li:not(:last-child)::after {
-    content: '|';
-    color: var(--border-color);
-    margin-left: 20px;
-}
-
-@media (max-width: 768px) {
-    .left-sidebar, .right-sidebar {
-        width: 120px;
-    }
-    .font-selector {
-        min-width: 150px;
-    }
-}
-
-@media (max-width: 768px) {
-    .main-content {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .notepad-container, .bottom-ad {
-        width: 95%;
-        margin: 15px 0;
-    }
-
-    .toolbar {
-        padding: 10px 15px;
-        gap: 8px;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-    }
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Notepad</title>
+
+    <!-- Meta Tags for SEO and Social Media -->
+    <meta name="description" content="Use our free online notepad to write, edit, and save notes easily. No login required. A fast and lightweight web-based notepad tool.">
+    <meta name="keywords" content="online notepad, free notepad, web-based notepad, note taking tool, simple notepad">
+    <meta name="author" content="Oussama Achouri">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:title" content="Online Notepad – Free & Simple Web-Based Note-Taking Tool">
+    <meta property="og:description" content="A fast and lightweight online notepad for writing and saving notes instantly. No sign-up required.">
+    <meta property="og:image" content="https://onlinenotepad.space/ONLINE.png">
+    <meta property="og:url" content="https://onlinenotepad.space/">
+    <meta property="og:type" content="website">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Online Notepad – Free & Simple Web-Based Note-Taking Tool">
+    <meta name="twitter:description" content="Write, edit, and save notes instantly with our free online notepad. No login required.">
+    <meta name="twitter:image" content="https://onlinenotepad.space/ONLINE.png">
+
+    <!-- Link to Favicon -->
+    <link rel="canonical" href="https://onlinenotepad.space">
+    <link rel="icon" type="image/png" href="https://onlinenotepad.space/favicon-16x16.png">
     
-    .toolbar-section {
-        width: auto;
-        justify-content: center;
-        flex-shrink: 0;
-    }
-    
-    .font-selector, .font-size-selector {
-        width: 100%;
-    }
-}
+    <!-- Link to Stylesheets (existing ones) -->
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
 
-@media (max-width: 768px) {
-    .emoji-grid {
-        grid-template-columns: repeat(6, 1fr);
+    <!-- JSON-LD Schema for Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Online Notepad",
+        "url": "https://onlinenotepad.space/",
+        "image": "https://onlinenotepad.space/ONLINE.png",
+        "description": "A simple and free online notepad tool that lets you quickly jot down, save, and organize your notes without any hassle.",
+        "applicationCategory": "Utility",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires JavaScript",
+        "author": {
+            "@type": "Person",
+            "name": "Oussama Achouri"
+        }
     }
+    </script>
     
-    .special-char-grid {
-        grid-template-columns: repeat(6, 1fr);
+    <!-- Add the Ezoic script here -->
+    <script src="https://go.ezoic.net/ezoic.js"></script>
+    <!-- Add docx.js import map for ESM support -->
+    <script type="importmap">
+    {
+      "imports": {
+        "docx": "https://unpkg.com/docx@7.1.0/build/index.js"
+      }
     }
-}
-
-@media (max-width: 768px) {
-    .guide-container {
-        padding: 30px 20px;
-    }
+    </script>
+    <!-- Add docx.js script for DOCX export -->
+    <script src="https://unpkg.com/docx@7.1.0/build/index.js"></script>
+    <!-- Add print-to-pdf helper script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <header class="site-header">
+        <a href="/" class="site-logo">Online Notepad</a>
+        <button class="home-button" onclick="window.location='/'">
+            <i class="ri-home-4-line"></i>
+            Return to Homepage
+        </button>
+    </header>
+    <div class="saved-files-container" id="savedFilesContainer">
+        <div class="saved-files-header">
+            <h3>Saved Notes</h3>
+            <button id="toggleSavedFiles" class="toggle-saved-btn">
+                <i class="ri-arrow-up-s-line"></i>
+            </button>
+        </div>
+        <div class="saved-files-list" id="savedFilesList">
+            <!-- Saved files will be populated here -->
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="notepad-container">
+            <div class="toolbar">
+                <div class="toolbar-group">
+                    <button class="toolbar-btn" data-action="new" title="New Note">
+                        <i class="ri-file-add-line"></i>
+                    </button>
+                    <button class="toolbar-btn" data-action="save" title="Save Note">
+                        <i class="ri-save-line"></i>
+                    </button>
+                    <button class="toolbar-btn" data-action="download" title="Download Note">
+                        <i class="ri-download-line"></i>
+                    </button>
+                    <button class="toolbar-btn" data-action="import" title="Import File">
+                        <i class="ri-folder-open-line"></i>
+                    </button>
+                    <button class="toolbar-btn" data-action="print" title="Print Note">
+                        <i class="ri-printer-line"></i>
+                    </button>
+                    <div class="word-counter-container">
+                        <span id="word-counter">0 words | 0 characters</span>
+                    </div>
+                </div>
+                
+                <div class="separator"></div>
+                
+                <div class="toolbar-group">
+                    <button class="toolbar-btn" data-action="undo" title="Undo">
+                        <i class="ri-arrow-go-back-line"></i>
+                    </button>
+                    <button class="toolbar-btn" data-action="redo" title="Redo">
+                        <i class="ri-arrow-go-forward-line"></i>
+                    </button>
+                </div>
+                
+                <div class="separator"></div>
+                
+                <div class="toolbar-group">
+                    <select id="fontSelector" class="font-selector">
+                        <option value="'Inter', sans-serif">Inter (Default)</option>
+                        <option value="'Arial', sans-serif">Arial</option>
+                        <option value="'Helvetica', sans-serif">Helvetica</option>
+                        <option value="'Times New Roman', serif">Times New Roman</option>
+                        <option value="'Georgia', serif">Georgia</option>
+                        <option value="'Courier New', monospace">Courier New</option>
+                        <option value="'Verdana', sans-serif">Verdana</option>
+                        <option value="'Tahoma', sans-serif">Tahoma</option>
+                        <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+                        <option value="'Arial Black', sans-serif">Arial Black</option>
+                        <option value="'Impact', sans-serif">Impact</option>
+                        <option value="'Comic Sans MS', cursive">Comic Sans MS</option>
+                        <option value="'Garamond', serif">Garamond</option>
+                        <option value="'Palatino', serif">Palatino</option>
+                        <option value="'Bookman', serif">Bookman</option>
+                        <option value="'Avant Garde', sans-serif">Avant Garde</option>
+                        <option value="'Century Gothic', sans-serif">Century Gothic</option>
+                        <option value="'Copperplate', fantasy">Copperplate</option>
+                        <option value="'Monaco', monospace">Monaco</option>
+                        <option value="'Consolas', monospace">Consolas</option>
+                        <option value="'Lucida Console', monospace">Lucida Console</option>
+                        <option value="'Brush Script MT', cursive">Brush Script MT</option>
+                        <option value="'Lucida Handwriting', cursive">Lucida Handwriting</option>
+                        <option value="'Segoe UI', sans-serif">Segoe UI</option>
+                        <option value="'Calibri', sans-serif">Calibri</option>
+                        <option value="'Cambria', serif">Cambria</option>
+                        <option value="'Open Sans', sans-serif">Open Sans</option>
+                        <option value="'Roboto', sans-serif">Roboto</option>
+                        <option value="'Lato', sans-serif">Lato</option>
+                        <option value="'Montserrat', sans-serif">Montserrat</option>
+                        <option value="'Oswald', sans-serif">Oswald</option>
+                        <option value="'Playfair Display', serif">Playfair Display</option>
+                    </select>
+                    
+                    <select id="fontSizeSelector" class="font-size-selector">
+                        <option value="12">12px</option>
+                        <option value="14">14px</option>
+                        <option value="16">16px</option>
+                        <option value="18">18px</option>
+                        <option value="19" selected>19px</option>
+                        <option value="20">20px</option>
+                        <option value="22">22px</option>
+                        <option value="24">24px</option>
+                        <option value="26">26px</option>
+                        <option value="28">28px</option>
+                        <option value="32">32px</option>
+                        <option value="36">36px</option>
+                        <option value="42">42px</option>
+                        <option value="48">48px</option>
+                        <option value="56">56px</option>
+                        <option value="64">64px</option>
+                        <option value="72">72px</option>
+                    </select>
+                </div>
+                
+                <div class="separator"></div>
+                
+                <div class="toolbar-group">
+                    <button class="toolbar-btn" data-action="bold" title="Bold">
+                        <i class="ri-bold"></i>
+                    </button>
+                    <button class="toolbar-btn" data-action="italic" title="Italic">
+                        <i class="ri-italic"></i>
+                    </button>
+                    <button class="toolbar-btn" data-action="underline" title="Underline">
+                        <i class="ri-underline"></i>
+                    </button>
+                    <button class="toolbar-btn" data-action="strikethrough" title="Strikethrough">
+                        <i class="ri-strikethrough"></i>
+                    </button>
+                </div>
+                
+                <div class="separator"></div>
+                
+                <div class="toolbar-group">
+                    <button class="toolbar-btn" data-action="justifyLeft" title="Align Left">
+                        <i class="ri-align-left"></i>
+                    </button>
+                    <button class="toolbar-btn" data-action="justifyCenter" title="Align Center">
+                        <i class="ri-align-center"></i>
+                    </button>
+                    <button class="toolbar-btn" data-action="justifyRight" title="Align Right">
+                        <i class="ri-align-right"></i>
+                    </button>
+                    <button class="toolbar-btn" data-action="justifyFull" title="Justify">
+                        <i class="ri-align-justify"></i>
+                    </button>
+                </div>
+                
+                <div class="separator"></div>
+                
+                <div class="toolbar-group">
+                    <button class="toolbar-btn" data-action="insertOrderedList" title="Numbered List">
+                        <i class="ri-list-ordered"></i>
+                    </button>
+                    <button class="toolbar-btn" data-action="insertUnorderedList" title="Bulleted List">
+                        <i class="ri-list-unordered"></i>
+                    </button>
+                </div>
+                
+                <div class="separator"></div>
+                
+                <div class="toolbar-group">
+                    <input type="color" id="textColor" class="color-input" title="Text Color">
+                    <input type="color" id="highlightColor" value="#ffff00" class="color-input" title="Highlight Color">
+                </div>
+                
+                <div class="separator"></div>
+                
+                <div class="toolbar-group">
+                    <button class="toolbar-btn" data-action="emoji" title="Emoji & Characters">
+                        <i class="ri-emotion-line"></i>
+                    </button>
+                    <button class="toolbar-btn" data-action="link" title="Insert Link">
+                        <i class="ri-link"></i>
+                    </button>
+                    <button class="toolbar-btn" data-action="image" title="Insert Image">
+                        <i class="ri-image-line"></i>
+                    </button>
+                    <button class="toolbar-btn" data-action="code" title="Insert Code Block">
+                        <i class="ri-code-line"></i>
+                    </button>
+                    <button class="toolbar-btn" data-action="table" title="Insert Table">
+                        <i class="ri-table-line"></i>
+                    </button>
+                    <button class="toolbar-btn" data-action="blockquote" title="Insert Blockquote">
+                        <i class="ri-double-quotes-l"></i>
+                    </button>
+                    <button class="toolbar-btn" data-action="horizontalLine" title="Insert Horizontal Line">
+                        <i class="ri-separator"></i>
+                    </button>
+                    <button class="toolbar-btn" data-action="findReplace" title="Find and Replace">
+                        <i class="ri-find-replace-line"></i>
+                    </button>
+                    <button class="toolbar-btn" data-action="removeFormat" title="Clear Formatting">
+                        <i class="ri-format-clear"></i>
+                    </button>
+                </div>
+                
+                <div class="separator"></div>
+                
+                <div class="toolbar-group">
+                    <button class="toolbar-btn" data-action="fullscreen" title="Fullscreen">
+                        <i class="ri-fullscreen-line"></i>
+                    </button>
+                    <button class="toolbar-btn" data-action="darkMode" title="Toggle Dark Mode">
+                        <i class="ri-moon-line"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="editor-container">
+                <div id="notepad" contenteditable="true" spellcheck="true" placeholder="Start typing your notes here..."></div>
+            </div>
+        </div>
+    </div>
+    <div class="tool-description">
+        <h1>Free Online Notepad: Write, Save, and Share Your Notes</h1>
+        <p>Our Online Notepad is a feature-rich text editor designed for seamless note-taking, writing, and document management. With a clean interface and powerful formatting tools, it helps you capture your thoughts with style and precision - no installation required.</p>
+        <div class="features-grid">
+            <div class="feature">
+                <i class="ri-file-edit-line"></i>
+                <h3>Rich Text Editing</h3>
+                <p>Format your content with bold, italic, underline, custom fonts, and more.</p>
+            </div>
+            <div class="feature">
+                <i class="ri-save-line"></i>
+                <h3>Auto-Saving</h3>
+                <p>Never lose your work with our online notepad's automatic saving functionality.</p>
+            </div>
+            <div class="feature">
+                <i class="ri-download-cloud-line"></i>
+                <h3>Multiple Export Formats</h3>
+                <p>Export your notes as TXT, HTML, PDF, DOCX and more formats.</p>
+            </div>
+            <div class="feature">
+                <i class="ri-emotion-line"></i>
+                <h3>Emoji & Special Characters</h3>
+                <p>Enhance your notes with emojis and special characters.</p>
+            </div>
+            <div class="feature">
+                <i class="ri-link"></i>
+                <h3>Interactive Links</h3>
+                <p>Add clickable links to websites, resources, and references to make your notes more useful.</p>
+            </div>
+            <div class="feature">
+                <i class="ri-device-line"></i>
+                <h3>Cross-Device Compatible</h3>
+                <p>Access Our tool from any device with a browser - desktop, tablet, or mobile phone.</p>
+            </div>
+        </div>
+    </div>
+    <div class="guide-section">
+        <div class="guide-container">
+            <h2 class="guide-title">Complete Guide to Use Our Free Online Notepad</h2>
+            
+            <div class="guide-content">
+                <h3>Getting Started </h3>
+                <p>Our Online Notepad makes note-taking simple. You don't need to create an account or download anything. Just open the app and start typing in your browser.</p>
+                <p>Your notes save right in your browser. This means you can come back later and find your work still there, making this Note-taking app perfect for ongoing projects.</p>
+                <p>The clean layout helps you focus on writing without distractions. All tools are at the top of the screen, making this Digital notepad both powerful and easy to use.</p>
+                
+                <h3>Basic Writing & Editing with this Browser-based notepad</h3>
+                <p>Click anywhere in the white area to start typing. The text area grows as you write more.</p>
+                <p>To select text, click and drag over the words you want to change. Then use the toolbar buttons to format them.</p>
+                <p>You can cut, copy, and paste text using keyboard shortcuts (Ctrl+X, Ctrl+C, Ctrl+V) or right-click menus just like in desktop applications.</p>
+                <p>The word and character counts at the bottom update as you type. This helps if you need to stay within a limit for your Virtual notepad documents.</p>
+                
+                <h3>Formatting Your Text in Our Online text editor</h3>
+                <p>Make text <b>bold</b> by selecting it and clicking the B button in our feature-rich online notepad.</p>
+                <p>Add <i>italics</i> with the I button to stress key points in your online documents.</p>
+                <p>Use <u>underline</u> to highlight important sections in your online notes.</p>
+                <p>Change fonts from the dropdown menu. Our Web-based notepad offers over 30 font choices.</p>
+                <p>Adjust text size using the size picker. Options range from 12px to 72px for perfect readability.</p>
+                
+                <h3>Saving Your Work in our Cloud notepad</h3>
+                <p>Your notes saved automatically in your browser storage. So you never have to worry about losing work.</p>
+                <p>By clicking the save icon, you can store your note permanently. You can save as many notes as you want .</p>
+                <p>You can find your saved notes in the panel at the top. Just click a note to open it again .</p>
+                <p>he most recent note loads when you return to our note manager for a seamless experience</p>
+                
+                <h3>Organizing Notes in Your Writing tool</h3>
+                <p>All notes appear in the saved notes panel. Click the arrow to show or hide this panel in the online notepad interface.</p>
+                <p>Notes sort by date, with the newest appearing first. Each shows a preview of its content for easy identification.</p>
+                <p>Rename notes by clicking the edit icon next to them. This helps you find them later in your Online writing pad collection.</p>
+                <p>Delete old notes you don't need by clicking the trash icon to keep your online notepad organized.</p>
+                
+                <h3>Exporting and Sharing from the Note editor</h3>
+                <p>Click the download button to save your note to your computer from the Free notepad.</p>
+                <p>Choose from various file types such as TXT, HTML, Markdown, RTF, DOCX, or PDF to ensure maximum compatibility.</p>
+                <p>PDF files keep all your formatting and look the same on any device when exported from our Online memo pad.</p>
+                <p>Word (DOCX) files work with Microsoft Office and other word processors for further editing.</p>
+                
+                <h3>Importing Files to Our Online Notepad</h3>
+                <p>Click the folder icon to open existing text files in our digital note editor.</p>
+                <p>This Simple notepad supports TXT, HTML, Markdown, RTF and DOCX formats for versatile use.</p>
+                <p>When you import a file, it opens as a new note. You can then edit and save it in the Note-making tool.</p>
+                <p>Large files may take a few seconds to open, especially DOCX files, but our Online note organizer handles them efficiently.</p>
+                
+                <h3>Special Features of Our Tool</h3>
+                <p>Add emojis and special symbols by clicking the smile icon. Browse categories or search for specific ones in our feature-rich Electronic notepad.</p>
+                <p>Insert links by selecting text and clicking the link button. Enter the URL and create clickable links in your online documents.</p>
+                <p>Add images from your computer or from a web URL using the image button for rich media notes.</p>
+                <p>Use fullscreen mode to focus on your writing without distractions in our immersive Web-based writing pad experience.</p>
+                
+                <h3>Online journal Keyboard Shortcuts</h3>
+                <p>Save time with these helpful shortcuts in our online notepad:</p>
+                <ul class="shortcut-list">
+                    <li><span class="key">Ctrl+Z</span> - Undo last action</li>
+                    <li><span class="key">Ctrl+Y</span> - Redo last action</li>
+                    <li><span class="key">Ctrl+B</span> - Bold text</li>
+                    <li><span class="key">Ctrl+I</span> - Italic text </li>
+                    <li><span class="key">Ctrl+U</span> - Underline text</li>
+                    <li><span class="key">Ctrl+S</span> - Save note </li>
+                    <li><span class="key">F11</span> - Toggle fullscreen </li>
+                </ul>
+                
+                <h3>Tips for Better Notes in Your Web note editor</h3>
+                <p>Use different fonts to separate sections of your notes. This makes them easier to scan .</p>
+                <p>Create simple outlines with bold headings and normal text for details in your online documents.</p>
+                <p>Add emojis as visual markers for different types of information in your Free text editor.</p>
+                <p>Keep each note focused on one topic. Create new notes for different subjects in your Portable notepad.</p>
+                <p>Use links to connect related notes or add references to web pages for a richer Online document pad experience.</p>
+                <p>Export important notes as PDFs for easy long-term storage or sharing outside the note organizer.</p>
+                
+                <h3>Privacy and Data in Our Online Notepad</h3>
+                <p>Your notes stay on your computer. Our notepad tool doesn't send them to any server.</p>
+                <p>Notes save in your browser's local storage. They remain in your storage until you delete them.</p>
+                <p>Clearing your browser data will remove your saved notes from the online notepad.</p>
+                <p>Export important notes to your computer for backup outside the online notepad.</p>
+            </div>
+            
+            <div class="faq-section">
+                <h3>Frequently Asked Questions</h3>
+                
+                <div class="faq-item">
+                    <h4>Is this tool free to use?</h4>
+                    <p>Yes, our Digital writing pad is completely free. There are no hidden fees or premium features - just a full-featured online notepad for everyone.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>Do I need to create an account to use this Notepad?</h4>
+                    <p>No. Our Online memo pad works without accounts or logins. Just open and start writing immediately.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>Where are my notes saved?</h4>
+                    <p>Notes save in your browser's local storage. They stay on your device, not on remote servers, ensuring privacy in your Online text editor usage.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>Will I lose my notes if I clear my browser data ?</h4>
+                    <p>Yes. Export important notes to your computer as backup before clearing browser data to preserve your Web-based notepad content.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>Can I use it offline?</h4>
+                    <p>Once loaded, you can use most features offline. Some export options may need internet access, but the core Digital notepad functions work without a connection.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>Is there a limit to how many notes I can save in this Web notepad?</h4>
+                    <p>The limit depends on your browser's storage capacity. Most users can save hundreds of notes in their Note-taking tool collection.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>How do I recover deleted notes ?</h4>
+                    <p>Once deleted, notes can't be recovered. Always export important notes as backup when using our Online writing tool.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>Can I use your Notepad on my phone?</h4>
+                    <p>Yes, our Virtual notepad works on mobile browsers. The interface adjusts to fit smaller screens for on-the-go note-taking.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>Does this Web-based text editor work with screen readers?</h4>
+                    <p>Our Online note editor supports basic accessibility features and works with most screen readers for inclusive use.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h4>How do I report bugs or suggest features for this Tool?</h4>
+                    <p>Contact us through form in contact us page to help improve our Simple text editor service.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <ul class="footer-menu">
+            <li><a href="about-me.html">About</a></li>
+            <li><a href="privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="contact-us.html">Contact Us</a></li>
+        </ul>
+    </footer>
     
-    .guide-title {
-        font-size: 26px;
-    }
-    
-    .guide-content h3 {
-        font-size: 22px;
-    }
-    
-    .guide-content p {
-        font-size: 16px;
-    }
-    
-    .faq-item h4 {
-        font-size: 18px;
-    }
-}
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docx@7.1.0/build/index.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
