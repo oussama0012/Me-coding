@@ -1229,7 +1229,7 @@ class NotepadApp {
             if (extension === 'docx') {
                 // Parse DOCX by looking for readable text content in XML with formatting
                 try {
-                    // Simple extraction of readable text from DOCX buffer with formatting preservation
+                    // Simple extraction of readable text from DOCX buffer with formatting
                     const array = new Uint8Array(arrayBuffer);
                     let textContent = '';
                     
@@ -2521,6 +2521,9 @@ class NotepadApp {
     toggleFullscreen() {
         const container = document.querySelector('.notepad-container');
         container.classList.toggle('fullscreen-mode');
+        
+        // Add or remove fullscreen-active class on body
+        document.body.classList.toggle('fullscreen-active');
         
         const button = document.querySelector('[data-action="fullscreen"] i');
         if (container.classList.contains('fullscreen-mode')) {
