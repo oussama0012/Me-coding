@@ -1,10 +1,39 @@
+/* Copied content from notepad-styles.css and added homepage styles */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 :root {
-    --primary-color: #3498db;
-    --secondary-color: #2ecc71;
-    --background-color: #f5f8fa;
-    --text-color: #2c3e50;
-    --accent-color: #e74c3c;
-    --shadow: 0 10px 30px rgba(0,0,0,0.1);
+    --bg-primary: #f8f9fa;
+    --bg-secondary: #ffffff;
+    --text-primary: #2d3748; /* Darker Gray */
+    --text-secondary: #4a5568; /* Medium Gray */
+    --accent-color: #6366f1; /* Indigo */
+    --accent-hover: #4f46e5; /* Darker Indigo */
+    --border-color: #e5e7eb; /* Lighter Gray Border */
+    --soft-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+    --medium-shadow: 0 8px 15px rgba(0,0,0,0.07);
+    --strong-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    --transition-speed: 0.25s ease-in-out;
+    --gradient-bg: linear-gradient(145deg, #f5f7fa 0%, #eef2ff 100%); /* Subtle gradient */
+    --card-bg: var(--bg-secondary);
+    --card-hover-bg: var(--bg-secondary); /* Keep background same on hover, rely on shadow/border */
+    --button-gradient: linear-gradient(to right, var(--accent-color), var(--accent-hover));
+    --icon-bg-color: rgba(99, 102, 241, 0.1); /* Light accent background for icons */
+    --accent-color-rgb: 99, 102, 241; /* RGB for RGBA usage */
+}
+
+.dark-theme {
+    --bg-primary: #1f2937; /* Dark Gray */
+    --bg-secondary: #374151; /* Medium Dark Gray */
+    --text-primary: #f3f4f6; /* Off-white */
+    --text-secondary: #9ca3af; /* Lighter Gray */
+    --border-color: #4b5563; /* Darker Border */
+    --soft-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
+    --medium-shadow: 0 8px 15px rgba(0,0,0,0.25);
+    --strong-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    --gradient-bg: linear-gradient(145deg, #111827 0%, #1f2937 100%); /* Dark Gradient */
+    --card-bg: var(--bg-secondary);
+    --card-hover-bg: #4b5563; /* Slightly lighter on hover */
+    --icon-bg-color: rgba(99, 102, 241, 0.15);
 }
 
 * {
@@ -13,483 +42,746 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+    font-size: 16px; /* Base font size */
+}
+
 body {
     font-family: 'Inter', sans-serif;
-    line-height: 1.8;
-    color: var(--text-color);
-    background-color: var(--background-color);
-    font-size: 1.1rem;
+    background: var(--gradient-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    color: var(--text-primary);
+    line-height: 1.6;
+    padding: 20px;
+    padding-top: 90px; /* Increased padding for fixed nav */
+    transition: background var(--transition-speed), color var(--transition-speed);
 }
 
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.5rem 8%;
-    background-color: white;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-    position: sticky;
+body.has-fullscreen {
+    overflow: hidden;
+    padding: 0;
+}
+
+/* Basic Navigation */
+.main-nav {
+    position: fixed;
     top: 0;
-    z-index: 100;
-}
-
-header nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-header .logo {
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--primary-color);
-    letter-spacing: -0.5px;
-}
-
-header ul {
-    display: flex;
-    list-style: none;
-    margin-left: auto;
-    gap: 3rem;
-}
-
-header ul li a {
-    text-decoration: none;
-    color: var(--text-color);
-    font-weight: 500;
-    transition: all 0.3s ease;
-    font-size: 1.1rem;
-    position: relative;
-    padding-bottom: 5px;
-}
-
-header ul li a:hover {
-    color: var(--primary-color);
-}
-
-header ul li a:after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: 0;
     left: 0;
-    background-color: var(--primary-color);
-    transition: width 0.3s ease;
-}
-
-header ul li a:hover:after {
     width: 100%;
-}
-
-#hero {
-    display: flex;
-    align-items: center;
-    padding: 8rem 8%;
-    gap: 5rem;
-    min-height: 90vh;
-    background: linear-gradient(to bottom right, #f5f8fa, #e6f7ff);
-}
-
-#hero .hero-content {
-    flex: 1;
-    max-width: 600px;
-}
-
-#hero h1 {
-    font-size: 4rem;
-    line-height: 1.2;
-    color: var(--text-color);
-    margin-bottom: 1.5rem;
-    font-weight: 800;
-}
-
-#hero h1 span {
-    color: var(--primary-color);
-    position: relative;
-}
-
-#hero p {
-    font-size: 1.4rem;
-    margin-bottom: 2.5rem;
-    color: #546a7b;
-}
-
-.cta-button {
-    display: inline-block;
-    background-color: var(--primary-color);
-    color: white;
-    padding: 1rem 2.5rem;
-    text-decoration: none;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 10px 20px rgba(52, 152, 219, 0.3);
-}
-
-.cta-button:hover {
-    background-color: #2980b9;
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(52, 152, 219, 0.4);
-}
-
-.hero-illustration {
-    flex: 1;
     display: flex;
     justify-content: center;
+    gap: 15px;
+    background-color: rgba(255, 255, 255, 0.85); /* Slightly less transparent */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 15px 20px; /* Slightly more padding */
+    border-bottom: 1px solid var(--border-color);
+    z-index: 1000;
+    transition: background-color var(--transition-speed), border-color var(--transition-speed), box-shadow var(--transition-speed);
+    box-shadow: var(--soft-shadow); /* Add subtle shadow to nav */
+}
+
+.dark-theme .main-nav {
+    background-color: rgba(31, 41, 55, 0.85); /* Dark theme nav */
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--text-primary);
+    padding: 10px 18px; /* Increased padding */
+    border-radius: 8px;
+    transition: all var(--transition-speed);
+    font-weight: 500;
+    display: inline-flex;
     align-items: center;
+    gap: 8px; /* Increased gap */
+    font-size: 1rem; /* Slightly larger font */
 }
 
-.hero-illustration svg {
+.nav-link i {
+    font-size: 1.2em; /* Slightly larger icon */
+    line-height: 1;
+}
+
+.nav-link:hover, .nav-link.active {
+    background-color: var(--accent-color);
+    color: white;
+    transform: translateY(-2px); /* Subtle hover lift */
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3); /* Enhanced shadow */
+}
+
+.nav-link.active {
+    background-color: var(--accent-hover);
+    box-shadow: 0 2px 6px rgba(79, 70, 229, 0.4); /* Active shadow */
+}
+
+/* Main Content Area */
+.main-content {
     width: 100%;
-    height: auto;
-    max-width: 600px;
+    max-width: 1200px;
+    margin: 30px auto; /* Increased margin */
+    padding: 0 20px; /* Slightly more padding */
 }
 
-#tools-overview {
+/* Homepage Specific Styles */
+.home-content {
+    display: flex;
+    flex-direction: column;
+    gap: 60px; /* Increased gap */
+}
+
+.home-header {
     text-align: center;
-    padding: 8rem 5%;
-    background-color: white;
+    margin-bottom: 40px; /* Increased margin */
+    padding: 40px 0; /* Increased padding */
+    border-bottom: 1px solid var(--border-color);
 }
 
-#tools-overview .main-title {
-    font-size: 3.5rem;
-    margin-bottom: 4rem;
-    color: var(--text-color);
-    position: relative;
-    display: inline-block;
+.home-header h1 {
+    font-size: 3rem; /* Larger */
+    font-weight: 700;
+    margin-bottom: 20px; /* Increased margin */
+    color: var(--text-primary); /* Use primary text color */
+    line-height: 1.2;
 }
 
-#tools-overview .main-title:after {
-    content: '';
-    position: absolute;
-    width: 120px;
-    height: 4px;
-    background-color: var(--primary-color);
-    bottom: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-#tools-overview h2 {
-    font-size: 3rem;
-    margin-bottom: 3rem;
-    position: relative;
-    display: inline-block;
-    margin-top: 5rem;
-}
-
-#tools-overview h2:after {
-    content: '';
-    position: absolute;
-    width: 80px;
-    height: 4px;
-    background-color: var(--primary-color);
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-#tools-overview h2:first-of-type {
-    margin-top: 0;
-}
-
-.tools-description {
-    max-width: 800px;
+.home-header p {
+    font-size: 1.2rem; /* Larger */
+    color: var(--text-secondary);
+    max-width: 700px; /* Wider */
     margin: 0 auto;
-    box-shadow: var(--shadow);
-    border-radius: 15px;
-    padding: 3rem;
-    background-color: #fff;
-    text-align: left;
 }
 
-.tools-description p {
-    font-size: 1.3rem;
-    margin-bottom: 2rem;
-    color: #546a7b;
+/* Calculator Gallery Styles */
+.calculator-gallery {
+    padding: 20px 0; /* Add padding */
+}
+
+.calculator-gallery h2, .about-section h2 {
+    text-align: center;
+    font-size: 2.2rem; /* Larger heading */
+    margin-bottom: 50px; /* More space */
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Slightly wider minmax */
+    gap: 35px; /* Increased gap */
+}
+
+.calculator-card {
+    background-color: var(--card-bg);
+    border-radius: 16px; /* More rounded corners */
+    padding: 35px; /* More padding */
+    border: 1px solid var(--border-color);
+    box-shadow: var(--soft-shadow);
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed), border-color var(--transition-speed), background-color var(--transition-speed);
+    display: flex;
+    flex-direction: column;
+    text-align: left; /* Align text left */
+    position: relative; /* Needed for icon positioning if absolute */
+    overflow: hidden; /* Ensure nothing spills */
+}
+
+.calculator-card:hover {
+    transform: translateY(-8px); /* Slightly more lift */
+    box-shadow: var(--medium-shadow);
+    border-color: rgba(var(--accent-color-rgb), 0.5); /* Accent border on hover */
+    background-color: var(--card-hover-bg);
+}
+
+.dark-theme .calculator-card:hover {
+    box-shadow: var(--strong-shadow);
+    border-color: rgba(var(--accent-color-rgb), 0.7);
+}
+
+/* Card Icon Styles */
+.card-icon-bg {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px; /* Rounded square */
+    background-color: var(--icon-bg-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px; /* Space below icon */
+    transition: background-color var(--transition-speed);
+}
+
+.card-icon {
+    font-size: 1.8rem; /* Icon size */
+    color: var(--accent-color);
+    line-height: 1;
+}
+
+.calculator-card h3 {
+    font-size: 1.45rem; /* Larger title */
+    margin-bottom: 15px; /* Increased margin */
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.calculator-card p {
+    font-size: 1rem; /* Standard paragraph size */
+    color: var(--text-secondary);
+    margin-bottom: 30px; /* More space before button */
+    flex-grow: 1; /* Push button down */
     line-height: 1.6;
 }
 
-.tool-features {
-    margin: 2.5rem 0;
-}
-
-.feature-item {
-    margin-bottom: 1rem;
-    font-size: 1.1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-}
-
-.feature-item i {
-    color: var(--secondary-color);
-    font-size: 1.2rem;
-}
-
-.tool-button {
+.card-link {
     display: inline-block;
-    background-color: var(--primary-color);
+    background: var(--button-gradient); /* Gradient background */
     color: white;
-    padding: 1rem 2.5rem;
+    padding: 14px 28px; /* Larger padding */
+    border-radius: 10px; /* Rounded button */
     text-decoration: none;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 1.1rem;
-    transition: all 0.3s ease;
-    box-shadow: 0 10px 20px rgba(52, 152, 219, 0.3);
-    margin-top: 1rem;
+    font-weight: 500;
+    transition: background var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
+    text-align: center; /* Center text in button */
+    box-shadow: 0 3px 7px rgba(var(--accent-color-rgb), 0.3); /* Subtle shadow */
+    border: none; /* Remove border if any */
+    align-self: flex-start; /* Align button to the start (left) */
+    margin-top: auto; /* Push to bottom if flex-grow doesn't suffice */
 }
 
-.tool-button:hover {
-    background-color: #2980b9;
-    transform: translateY(-3px);
-    box-shadow: 0 15px 30px rgba(52, 152, 219, 0.4);
+.card-link:hover {
+    background: var(--accent-hover); /* Solid color on hover */
+    transform: translateY(-3px); /* Button lift */
+    box-shadow: 0 5px 12px rgba(var(--accent-color-rgb), 0.4); /* Stronger shadow */
 }
 
-.tool-button i {
-    margin-right: 0.5rem;
+/* About Section */
+.about-section {
+    background-color: var(--card-bg);
+    padding: 50px; /* More padding */
+    border-radius: 16px; /* Match card rounding */
+    border: 1px solid var(--border-color);
+    box-shadow: var(--soft-shadow);
+    margin-top: 30px; /* Add space above */
 }
 
-.notepad-container {
+.about-section p {
+    text-align: center;
     max-width: 800px;
     margin: 0 auto;
-    box-shadow: var(--shadow);
-    border-radius: 15px;
-    overflow: hidden;
+    color: var(--text-secondary);
+    font-size: 1.1rem; /* Slightly larger */
+    line-height: 1.7;
 }
 
-.notepad-tools {
+/* --- Styles below are mostly from notepad-styles.css for consistency --- */
+
+/* Ad Containers */
+.ad-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 30px auto; /* Slightly more margin */
+    padding: 20px;
+    background-color: var(--bg-secondary);
+    border-radius: 12px;
+    box-shadow: var(--soft-shadow);
+    border: 1px solid var(--border-color);
     display: flex;
-    padding: 1rem;
-    background-color: #f0f9ff;
-    border-bottom: 1px solid #e0e0e0;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px; /* Increased min height */
 }
 
-.notepad-tools button {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 0.7rem 1.5rem;
-    border-radius: 5px;
-    margin-right: 1rem;
-    cursor: pointer;
+.ad-placeholder {
+    color: var(--text-secondary);
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+/* Saved Files Container (for Notepad page) */
+.saved-files-container {
+    position: fixed;
+    top: 80px; /* Adjust based on final nav height */
+    right: 20px;
+    width: 320px; /* Slightly wider */
+    max-height: calc(100vh - 100px); /* Adjust */
+    background-color: var(--bg-secondary);
+    border-radius: 12px;
+    box-shadow: var(--medium-shadow); /* Stronger shadow */
+    z-index: 999;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.4s ease;
+    transform: translateY(-20px) scale(0.95); /* Add scale effect */
+    opacity: 0;
+    pointer-events: none;
+    border: 1px solid var(--border-color);
+}
+
+.saved-files-container.visible {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.saved-files-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 18px; /* Adjusted padding */
+    border-bottom: 1px solid var(--border-color);
+    background-color: rgba(var(--accent-color-rgb), 0.05);
+}
+
+.dark-theme .saved-files-header {
+     background-color: rgba(var(--accent-color-rgb), 0.1);
+}
+
+.saved-files-header h3 {
+    margin: 0;
+    font-size: 1.05rem; /* Slightly larger */
     font-weight: 600;
+}
+
+.toggle-saved-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.6rem; /* Slightly larger */
+    color: var(--text-primary);
+    transition: transform var(--transition-speed), color var(--transition-speed);
+    padding: 5px;
+    line-height: 1; /* Ensure proper vertical alignment */
+}
+
+.saved-files-list {
+    padding: 12px; /* Increased padding */
+    max-height: calc(100vh - 165px); /* Adjust based on header/footer */
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent-color) transparent; /* Make track transparent */
+}
+
+/* Webkit scrollbar styles */
+.saved-files-list::-webkit-scrollbar {
+    width: 6px; /* Thinner scrollbar */
+}
+.saved-files-list::-webkit-scrollbar-track {
+    background: transparent; /* Transparent track */
+}
+.saved-files-list::-webkit-scrollbar-thumb {
+    background-color: var(--accent-color);
+    border-radius: 3px;
+    /* border: 2px solid var(--bg-primary); */ /* Remove border */
+}
+.saved-files-list::-webkit-scrollbar-thumb:hover {
+    background-color: var(--accent-hover);
+}
+
+.saved-file-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 12px; /* Increased padding */
+    margin-bottom: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color var(--transition-speed), border-left-color var(--transition-speed);
+    border: 1px solid transparent;
+    border-left: 3px solid transparent; /* Add space for active indicator */
+}
+
+.saved-file-item:hover {
+    background-color: var(--card-hover-bg);
+    /* border-color: var(--border-color); */ /* Keep border subtle */
+}
+
+.saved-file-item.active {
+    background-color: rgba(var(--accent-color-rgb), 0.1);
+    border-left-color: var(--accent-color); /* Use border-left */
+    font-weight: 500;
+}
+
+.file-info {
+    flex-grow: 1;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.file-title {
+    display: block;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.95rem; /* Slightly larger */
+    margin-bottom: 3px; /* Adjusted spacing */
+}
+
+.file-timestamp {
+    font-size: 0.8rem; /* Slightly larger */
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.file-actions button {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 5px; /* Slightly larger hit area */
+    font-size: 1.1rem; /* Slightly larger icons */
+    transition: color var(--transition-speed);
+    margin-left: 6px; /* Increased spacing */
+    line-height: 1;
+}
+
+.file-actions .delete-btn:hover {
+    color: #ef4444; 
+}
+
+/* Notepad Container (for Notepad page) */
+.notepad-container {
+    background-color: var(--bg-secondary);
+    border-radius: 12px;
+    box-shadow: var(--soft-shadow);
+    overflow: hidden;
+    width: 100%;
+    max-width: 1600px; 
+    margin: 0 auto; 
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 180px); 
+    min-height: 500px;
+    border: 1px solid var(--border-color);
+}
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap; 
+    align-items: center;
+    padding: 8px 15px;
+    background-color: var(--bg-primary);
+    border-bottom: 1px solid var(--border-color);
+    gap: 5px; 
+}
+
+.toolbar-group {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    transition: all 0.3s ease;
+    gap: 5px; 
+    margin: 3px 0; 
 }
 
-.notepad-tools button:hover {
-    background-color: #2980b9;
-    transform: translateY(-2px);
+.separator {
+    width: 1px;
+    height: 24px;
+    background-color: var(--border-color);
+    margin: 0 10px;
+}
+
+.toolbar-btn {
+    background: none;
+    border: none;
+    padding: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--text-primary);
+    font-size: 1.1rem; 
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toolbar-btn:hover {
+    background-color: var(--border-color);
+    color: var(--accent-color);
+}
+
+.toolbar-btn.active {
+    background-color: rgba(var(--accent-color-rgb, 99, 102, 241), 0.2);
+    color: var(--accent-color);
+}
+
+.font-selector,
+.font-size-selector {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    cursor: pointer;
+    max-width: 150px; 
+    transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.font-selector:hover,
+.font-size-selector:hover {
+    border-color: var(--accent-color);
+}
+
+.font-selector:focus,
+.font-size-selector:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+}
+
+.color-input {
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    cursor: pointer;
+    padding: 2px; 
+    background-color: var(--bg-secondary); 
+    transition: border-color var(--transition-speed);
+}
+
+.color-input::-webkit-color-swatch-wrapper {
+    padding: 0; 
+}
+.color-input::-webkit-color-swatch {
+    border: none; 
+    border-radius: 4px; 
+}
+/* Firefox */
+.color-input::-moz-color-swatch {
+    border: none;
+    border-radius: 4px;
+}
+.color-input:hover {
+    border-color: var(--accent-color);
+}
+
+.word-counter-container {
+    margin-left: auto; 
+    padding: 0 10px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.editor-container {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    position: relative; 
 }
 
 #notepad {
     width: 100%;
-    min-height: 400px;
-    padding: 2rem;
-    border: none;
-    resize: vertical;
-    font-family: 'Inter', sans-serif;
-    font-size: 1.1rem;
-    line-height: 1.7;
-    color: var(--text-color);
-    background-color: #fff;
-}
-
-#notepad:focus {
+    height: 100%;
     outline: none;
+    font-size: 19px; 
+    line-height: 1.7;
+    color: var(--text-primary);
+    caret-color: var(--accent-color);
+    min-height: 200px; 
 }
 
-#why-choose-us {
-    padding: 8rem 5%;
-    background: linear-gradient(135deg, #f7fafd, #e6f7ff);
-    text-align: center;
-}
-
-#why-choose-us .container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-#why-choose-us h2 {
-    font-size: 3.5rem;
-    margin-bottom: 4rem;
-    color: var(--text-color);
-    position: relative;
-    display: inline-block;
-    font-weight: 800;
-}
-
-#why-choose-us h2:after {
-    content: '';
+/* Placeholder styling */
+#notepad:empty:before {
+    content: attr(placeholder);
+    color: var(--text-secondary);
+    opacity: 0.6;
     position: absolute;
-    width: 120px;
-    height: 4px;
-    background-color: var(--primary-color);
-    bottom: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 2px;
+    top: 20px; 
+    left: 20px; 
+    pointer-events: none; 
 }
 
-.benefits-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 3rem;
-    margin-top: 4rem;
-}
-
-.benefit-card {
-    background-color: white;
-    padding: 3rem 2.5rem;
-    border-radius: 15px;
-    box-shadow: 0 15px 30px rgba(0,0,0,0.08);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-    text-align: left;
-    position: relative;
-    overflow: hidden;
-    border: 1px solid rgba(0,0,0,0.03);
-}
-
-.benefit-card:hover {
-    transform: translateY(-15px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-}
-
-.benefit-card:before {
-    content: '';
-    position: absolute;
+/* Fullscreen mode */
+.fullscreen-mode .notepad-container {
+    position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    height: 5px;
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    width: 100%;
+    height: 100vh;
+    border-radius: 0;
+    z-index: 1001; 
+    max-width: none;
+    border: none;
+    box-shadow: none;
 }
 
-.benefit-icon {
-    color: var(--primary-color);
-    font-size: 3rem;
-    margin-bottom: 2rem;
-    position: relative;
-    display: inline-block;
+.fullscreen-mode .main-nav,
+.fullscreen-mode .ad-container,
+.fullscreen-mode .footer {
+    display: none; 
 }
 
-.benefit-icon:after {
-    content: '';
-    position: absolute;
-    width: 40px;
-    height: 2px;
-    background-color: var(--secondary-color);
-    bottom: -10px;
-    left: 0;
+/* Tool Description & Features Grid (Can be reused or adapted) */
+.tool-description {
+    width: 100%;
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: var(--bg-secondary);
+    border-radius: 12px;
+    box-shadow: var(--soft-shadow);
+    text-align: center;
+    border: 1px solid var(--border-color);
 }
-
-.benefit-card h3 {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-    color: var(--text-color);
-    font-weight: 700;
+.tool-description h1 {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    color: var(--accent-color);
 }
-
-.benefit-card p {
-    color: #546a7b;
-    font-size: 1.15rem;
+.tool-description p {
+    color: var(--text-secondary);
+    margin-bottom: 25px;
     line-height: 1.7;
 }
 
-footer {
-    background-color: #1f2937;
-    color: white;
-    padding: 5rem 8%;
-    border-top: 5px solid var(--primary-color);
-}
-
-.footer-content {
+.features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 3rem;
+    gap: 25px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    body {
+        padding-top: 75px; /* Adjust for potentially smaller nav */
+    }
+    .main-nav {
+        padding: 12px 15px;
+        gap: 10px;
+    }
+    .nav-link {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+    }
+    .home-header h1 {
+        font-size: 2.5rem;
+    }
+    .home-header p {
+        font-size: 1.1rem;
+    }
+    .calculator-gallery h2, .about-section h2 {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+    }
+    .gallery-grid {
+        gap: 25px;
+    }
+    .calculator-card {
+        padding: 25px;
+    }
+    .card-icon-bg {
+        width: 45px;
+        height: 45px;
+        margin-bottom: 15px;
+    }
+    .card-icon {
+        font-size: 1.6rem;
+    }
+    .calculator-card h3 {
+        font-size: 1.3rem;
+    }
+    .card-link {
+        padding: 12px 24px;
+    }
+    .about-section {
+        padding: 30px;
+    }
+    .footer-menu {
+        gap: 15px;
+        flex-wrap: wrap; /* Allow wrapping on small screens */
+    }
+
+    /* Notepad specific adjustments if needed */
+    .saved-files-container {
+        width: 90%;
+        max-width: 300px;
+        right: 5%;
+        top: 75px;
+    }
+    .toolbar {
+        padding: 8px 10px; /* Reduce padding */
+        gap: 3px;
+    }
+    .toolbar-group {
+        gap: 3px;
+    }
+    .separator {
+        margin: 0 5px; /* Reduce separator margin */
+    }
+    .toolbar-btn {
+        padding: 6px; /* Reduce button padding */
+        font-size: 1rem;
+    }
+    .font-selector, .font-size-selector {
+        padding: 5px 8px;
+        font-size: 0.85rem;
+    }
+     .word-counter-container {
+       display: none; /* Hide on smaller screens if needed */
+    }
+}
+
+@media (max-width: 480px) {
+     .home-header h1 {
+        font-size: 2rem;
+    }
+    .home-header p {
+        font-size: 1rem;
+    }
+    .gallery-grid {
+        grid-template-columns: 1fr; /* Stack cards */
+        gap: 20px;
+    }
+    .nav-link span { /* Option to hide text on very small screens */
+       /* display: none; */
+    }
+    .nav-link {
+       padding: 8px;
+    }
+    .nav-link i {
+       font-size: 1.3em;
+    }
+    .footer-menu {
+        gap: 10px;
+    }
+     .footer-menu li a {
+        font-size: 0.9rem;
+    }
+}
+
+.footer {
+    width: 100%;
     max-width: 1200px;
-    margin: 0 auto;
-}
-
-.footer-section {
-    flex: 1;
-    min-width: 250px;
-}
-
-.footer-section h4 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-    position: relative;
-    display: inline-block;
-    color: #fff;
-    font-weight: 600;
-}
-
-.footer-section h4:after {
-    content: '';
-    position: absolute;
-    width: 40px;
-    height: 3px;
-    background-color: var(--primary-color);
-    bottom: -10px;
-    left: 0;
-    border-radius: 2px;
-}
-
-.footer-section ul {
-    list-style: none;
-}
-
-.footer-section ul li {
-    margin-bottom: 1rem;
-    transition: transform 0.3s ease;
-}
-
-.footer-section ul li:hover {
-    transform: translateX(5px);
-}
-
-.footer-section ul li a, .social-icons a {
-    color: rgba(255,255,255,0.8);
-    text-decoration: none;
-    transition: color 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 500;
-}
-
-.footer-section ul li a:hover, .social-icons a:hover {
-    color: var(--primary-color);
-}
-
-.social-icons {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.social-icons a {
-    font-size: 1.1rem;
-    padding: 0.5rem 0;
-}
-
-.social-icons a i {
-    width: 25px;
-}
-
-.footer-bottom {
+    margin-top: auto; /* Pushes footer to bottom */
+    padding: 25px 20px;
     text-align: center;
-    margin-top: 4rem;
-    padding-top: 2rem;
-    border-top: 1px solid rgba(255,255,255,0.1);
-    color: rgba(255,255,255,0.6);
+    border-top: 1px solid var(--border-color);
+    margin-top: 50px; /* Add margin above footer */
+}
+
+.footer-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 25px; /* Increase gap */
+}
+
+.footer-menu li a {
+    text-decoration: none;
+    color: var(--text-secondary);
     font-size: 0.95rem;
+    transition: color var(--transition-speed);
+}
+
+.footer-menu li a:hover {
+    color: var(--accent-color);
+    text-decoration: underline;
 }
