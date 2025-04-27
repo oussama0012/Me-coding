@@ -1,787 +1,273 @@
-/* Copied content from notepad-styles.css and added homepage styles */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
-:root {
-    --bg-primary: #f8f9fa;
-    --bg-secondary: #ffffff;
-    --text-primary: #2d3748; /* Darker Gray */
-    --text-secondary: #4a5568; /* Medium Gray */
-    --accent-color: #6366f1; /* Indigo */
-    --accent-hover: #4f46e5; /* Darker Indigo */
-    --border-color: #e5e7eb; /* Lighter Gray Border */
-    --soft-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
-    --medium-shadow: 0 8px 15px rgba(0,0,0,0.07);
-    --strong-shadow: 0 10px 20px rgba(0,0,0,0.1);
-    --transition-speed: 0.25s ease-in-out;
-    --gradient-bg: linear-gradient(145deg, #f5f7fa 0%, #eef2ff 100%); /* Subtle gradient */
-    --card-bg: var(--bg-secondary);
-    --card-hover-bg: var(--bg-secondary); /* Keep background same on hover, rely on shadow/border */
-    --button-gradient: linear-gradient(to right, var(--accent-color), var(--accent-hover));
-    --icon-bg-color: rgba(99, 102, 241, 0.1); /* Light accent background for icons */
-    --accent-color-rgb: 99, 102, 241; /* RGB for RGBA usage */
-}
-
-.dark-theme {
-    --bg-primary: #1f2937; /* Dark Gray */
-    --bg-secondary: #374151; /* Medium Dark Gray */
-    --text-primary: #f3f4f6; /* Off-white */
-    --text-secondary: #9ca3af; /* Lighter Gray */
-    --border-color: #4b5563; /* Darker Border */
-    --soft-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -1px rgba(0, 0, 0, 0.15);
-    --medium-shadow: 0 8px 15px rgba(0,0,0,0.25);
-    --strong-shadow: 0 10px 20px rgba(0,0,0,0.3);
-    --gradient-bg: linear-gradient(145deg, #111827 0%, #1f2937 100%); /* Dark Gradient */
-    --card-bg: var(--bg-secondary);
-    --card-hover-bg: #4b5563; /* Slightly lighter on hover */
-    --icon-bg-color: rgba(99, 102, 241, 0.15);
-}
-
-* {
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-    font-size: 16px; /* Base font size */
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-    background: var(--gradient-bg);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    color: var(--text-primary);
+    background-color: #f8f9fa; 
+    color: #495057; 
     line-height: 1.6;
-    padding: 20px;
-    padding-top: 90px; /* Increased padding for fixed nav */
-    transition: background var(--transition-speed), color var(--transition-speed);
 }
 
-body.has-fullscreen {
-    overflow: hidden;
+header {
+    background-color: #ffffff; 
+    color: #343a40; 
+    padding: 1.5rem 0;
+    text-align: center;
+    border-bottom: 1px solid #dee2e6; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); 
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.2rem; 
+    font-weight: 600;
+}
+
+nav ul {
+    list-style: none;
     padding: 0;
-}
-
-/* Basic Navigation */
-.main-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+    margin: 1rem 0 0 0;
     display: flex;
     justify-content: center;
-    gap: 15px;
-    background-color: rgba(255, 255, 255, 0.85); /* Slightly less transparent */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    padding: 15px 20px; /* Slightly more padding */
-    border-bottom: 1px solid var(--border-color);
-    z-index: 1000;
-    transition: background-color var(--transition-speed), border-color var(--transition-speed), box-shadow var(--transition-speed);
-    box-shadow: var(--soft-shadow); /* Add subtle shadow to nav */
+    background-color: transparent; 
 }
 
-.dark-theme .main-nav {
-    background-color: rgba(31, 41, 55, 0.85); /* Dark theme nav */
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+nav ul li {
+    margin: 0 0.5rem; 
 }
 
-.nav-link {
+nav ul li a {
+    display: block;
+    padding: 0.8rem 1.2rem;
+    color: #495057; 
     text-decoration: none;
-    color: var(--text-primary);
-    padding: 10px 18px; /* Increased padding */
-    border-radius: 8px;
-    transition: all var(--transition-speed);
+    border-radius: 5px; 
+    transition: background-color 0.3s ease, color 0.3s ease;
+    position: relative; 
     font-weight: 500;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px; /* Increased gap */
-    font-size: 1rem; /* Slightly larger font */
 }
 
-.nav-link i {
-    font-size: 1.2em; /* Slightly larger icon */
-    line-height: 1;
+nav ul li a:hover {
+    background-color: #e9ecef; 
+    color: #007bff; 
 }
 
-.nav-link:hover, .nav-link.active {
-    background-color: var(--accent-color);
-    color: white;
-    transform: translateY(-2px); /* Subtle hover lift */
-    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3); /* Enhanced shadow */
+nav ul li a.active {
+    background-color: transparent; 
+    color: #007bff; 
+    font-weight: 600;
 }
 
-.nav-link.active {
-    background-color: var(--accent-hover);
-    box-shadow: 0 2px 6px rgba(79, 70, 229, 0.4); /* Active shadow */
+nav ul li a.active::after {
+    content: '';
+    position: absolute;
+    bottom: 5px; 
+    left: 15%;
+    right: 15%;
+    height: 2px;
+    background-color: #007bff; 
 }
 
-/* Main Content Area */
-.main-content {
-    width: 100%;
-    max-width: 1200px;
-    margin: 30px auto; /* Increased margin */
-    padding: 0 20px; /* Slightly more padding */
+main {
+    padding: 2.5rem; 
+    max-width: 1140px; 
+    margin: 2.5rem auto; 
+    background-color: #ffffff; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
+    border-radius: 8px; 
 }
 
-/* Homepage Specific Styles */
+main > section {
+    margin-bottom: 2.5rem; 
+    padding-bottom: 1.5rem; 
+}
+
+main > section:last-child {
+    border-bottom: none;
+    margin-bottom: 0; 
+}
+
+section h2 {
+    color: #343a40; 
+    margin-bottom: 1.5rem; 
+    font-size: 1.9rem;
+    font-weight: 600;
+    border-bottom: 3px solid #007bff; 
+    padding-bottom: 0.6rem; 
+    display: inline-block; 
+}
+
 .home-content {
     display: flex;
-    flex-direction: column;
-    gap: 60px; /* Increased gap */
-}
-
-.home-header {
-    text-align: center;
-    margin-bottom: 40px; /* Increased margin */
-    padding: 40px 0; /* Increased padding */
-    border-bottom: 1px solid var(--border-color);
-}
-
-.home-header h1 {
-    font-size: 3rem; /* Larger */
-    font-weight: 700;
-    margin-bottom: 20px; /* Increased margin */
-    color: var(--text-primary); /* Use primary text color */
-    line-height: 1.2;
-}
-
-.home-header p {
-    font-size: 1.2rem; /* Larger */
-    color: var(--text-secondary);
-    max-width: 700px; /* Wider */
-    margin: 0 auto;
-}
-
-/* Calculator Gallery Styles */
-.calculator-gallery {
-    padding: 20px 0; /* Add padding */
-}
-
-.calculator-gallery h2, .about-section h2 {
-    text-align: center;
-    font-size: 2.2rem; /* Larger heading */
-    margin-bottom: 50px; /* More space */
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Slightly wider minmax */
-    gap: 35px; /* Increased gap */
-}
-
-.calculator-card {
-    background-color: var(--card-bg);
-    border-radius: 16px; /* More rounded corners */
-    padding: 35px; /* More padding */
-    border: 1px solid var(--border-color);
-    box-shadow: var(--soft-shadow);
-    transition: transform var(--transition-speed), box-shadow var(--transition-speed), border-color var(--transition-speed), background-color var(--transition-speed);
-    display: flex;
-    flex-direction: column;
-    text-align: left; /* Align text left */
-    position: relative; /* Needed for icon positioning if absolute */
-    overflow: hidden; /* Ensure nothing spills */
-}
-
-.calculator-card:hover {
-    transform: translateY(-8px); /* Slightly more lift */
-    box-shadow: var(--medium-shadow);
-    border-color: rgba(var(--accent-color-rgb), 0.5); /* Accent border on hover */
-    background-color: var(--card-hover-bg);
-}
-
-.dark-theme .calculator-card:hover {
-    box-shadow: var(--strong-shadow);
-    border-color: rgba(var(--accent-color-rgb), 0.7);
-}
-
-/* Card Icon Styles */
-.card-icon-bg {
-    width: 50px;
-    height: 50px;
-    border-radius: 12px; /* Rounded square */
-    background-color: var(--icon-bg-color);
-    display: flex;
     align-items: center;
-    justify-content: center;
-    margin-bottom: 20px; /* Space below icon */
-    transition: background-color var(--transition-speed);
+    gap: 2.5rem;
+    flex-wrap: wrap; 
 }
 
-.card-icon {
-    font-size: 1.8rem; /* Icon size */
-    color: var(--accent-color);
-    line-height: 1;
+.home-text {
+    flex: 1 1 55%; 
+    min-width: 300px; 
 }
 
-.calculator-card h3 {
-    font-size: 1.45rem; /* Larger title */
-    margin-bottom: 15px; /* Increased margin */
-    font-weight: 600;
-    color: var(--text-primary);
+.home-text p {
+    margin-bottom: 1.2rem;
+    color: #495057;
+    font-size: 1.1rem;
 }
 
-.calculator-card p {
-    font-size: 1rem; /* Standard paragraph size */
-    color: var(--text-secondary);
-    margin-bottom: 30px; /* More space before button */
-    flex-grow: 1; /* Push button down */
-    line-height: 1.6;
+.home-visual {
+    flex: 1 1 35%;
+    text-align: center;
+    min-width: 250px; 
 }
 
-.card-link {
+.home-visual svg {
+    max-width: 100%;
+    height: auto;
+    max-height: 220px; 
+    display: block; 
+    margin: 0 auto; 
+}
+
+.cta-button {
     display: inline-block;
-    background: var(--button-gradient); /* Gradient background */
-    color: white;
-    padding: 14px 28px; /* Larger padding */
-    border-radius: 10px; /* Rounded button */
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 0.8rem 1.8rem;
+    border-radius: 5px;
     text-decoration: none;
     font-weight: 500;
-    transition: background var(--transition-speed), transform var(--transition-speed), box-shadow var(--transition-speed);
-    text-align: center; /* Center text in button */
-    box-shadow: 0 3px 7px rgba(var(--accent-color-rgb), 0.3); /* Subtle shadow */
-    border: none; /* Remove border if any */
-    align-self: flex-start; /* Align button to the start (left) */
-    margin-top: auto; /* Push to bottom if flex-grow doesn't suffice */
-}
-
-.card-link:hover {
-    background: var(--accent-hover); /* Solid color on hover */
-    transform: translateY(-3px); /* Button lift */
-    box-shadow: 0 5px 12px rgba(var(--accent-color-rgb), 0.4); /* Stronger shadow */
-}
-
-/* About Section */
-.about-section {
-    background-color: var(--card-bg);
-    padding: 50px; /* More padding */
-    border-radius: 16px; /* Match card rounding */
-    border: 1px solid var(--border-color);
-    box-shadow: var(--soft-shadow);
-    margin-top: 30px; /* Add space above */
-}
-
-.about-section p {
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto;
-    color: var(--text-secondary);
-    font-size: 1.1rem; /* Slightly larger */
-    line-height: 1.7;
-}
-
-/* --- Styles below are mostly from notepad-styles.css for consistency --- */
-
-/* Ad Containers */
-.ad-container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 30px auto; /* Slightly more margin */
-    padding: 20px;
-    background-color: var(--bg-secondary);
-    border-radius: 12px;
-    box-shadow: var(--soft-shadow);
-    border: 1px solid var(--border-color);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100px; /* Increased min height */
-}
-
-.ad-placeholder {
-    color: var(--text-secondary);
-    font-style: italic;
-    font-size: 0.9rem;
-}
-
-/* Saved Files Container (for Notepad page) */
-.saved-files-container {
-    position: fixed;
-    top: 80px; /* Adjust based on final nav height */
-    right: 20px;
-    width: 320px; /* Slightly wider */
-    max-height: calc(100vh - 100px); /* Adjust */
-    background-color: var(--bg-secondary);
-    border-radius: 12px;
-    box-shadow: var(--medium-shadow); /* Stronger shadow */
-    z-index: 999;
-    overflow: hidden;
-    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.4s ease;
-    transform: translateY(-20px) scale(0.95); /* Add scale effect */
-    opacity: 0;
-    pointer-events: none;
-    border: 1px solid var(--border-color);
-}
-
-.saved-files-container.visible {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.saved-files-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 18px; /* Adjusted padding */
-    border-bottom: 1px solid var(--border-color);
-    background-color: rgba(var(--accent-color-rgb), 0.05);
-}
-
-.dark-theme .saved-files-header {
-     background-color: rgba(var(--accent-color-rgb), 0.1);
-}
-
-.saved-files-header h3 {
-    margin: 0;
-    font-size: 1.05rem; /* Slightly larger */
-    font-weight: 600;
-}
-
-.toggle-saved-btn {
-    background: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 1rem;
     border: none;
     cursor: pointer;
-    font-size: 1.6rem; /* Slightly larger */
-    color: var(--text-primary);
-    transition: transform var(--transition-speed), color var(--transition-speed);
-    padding: 5px;
-    line-height: 1; /* Ensure proper vertical alignment */
 }
 
-.saved-files-list {
-    padding: 12px; /* Increased padding */
-    max-height: calc(100vh - 165px); /* Adjust based on header/footer */
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--accent-color) transparent; /* Make track transparent */
+.cta-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
 }
 
-/* Webkit scrollbar styles */
-.saved-files-list::-webkit-scrollbar {
-    width: 6px; /* Thinner scrollbar */
-}
-.saved-files-list::-webkit-scrollbar-track {
-    background: transparent; /* Transparent track */
-}
-.saved-files-list::-webkit-scrollbar-thumb {
-    background-color: var(--accent-color);
-    border-radius: 3px;
-    /* border: 2px solid var(--bg-primary); */ /* Remove border */
-}
-.saved-files-list::-webkit-scrollbar-thumb:hover {
-    background-color: var(--accent-hover);
-}
-
-.saved-file-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 12px; /* Increased padding */
-    margin-bottom: 8px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color var(--transition-speed), border-left-color var(--transition-speed);
-    border: 1px solid transparent;
-    border-left: 3px solid transparent; /* Add space for active indicator */
-}
-
-.saved-file-item:hover {
-    background-color: var(--card-hover-bg);
-    /* border-color: var(--border-color); */ /* Keep border subtle */
-}
-
-.saved-file-item.active {
-    background-color: rgba(var(--accent-color-rgb), 0.1);
-    border-left-color: var(--accent-color); /* Use border-left */
+.cta-link {
+    color: #007bff;
+    text-decoration: none;
     font-weight: 500;
 }
 
-.file-info {
-    flex-grow: 1;
-    overflow: hidden;
-    margin-right: 10px;
+.cta-link:hover {
+    text-decoration: underline;
 }
 
-.file-title {
-    display: block;
-    font-weight: 500;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 0.95rem; /* Slightly larger */
-    margin-bottom: 3px; /* Adjusted spacing */
+.calculator-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 2rem; 
+    margin-top: 1.5rem;
 }
 
-.file-timestamp {
-    font-size: 0.8rem; /* Slightly larger */
-    color: var(--text-secondary);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.file-actions button {
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    cursor: pointer;
-    padding: 5px; /* Slightly larger hit area */
-    font-size: 1.1rem; /* Slightly larger icons */
-    transition: color var(--transition-speed);
-    margin-left: 6px; /* Increased spacing */
-    line-height: 1;
-}
-
-.file-actions .delete-btn:hover {
-    color: #ef4444; 
-}
-
-/* Notepad Container (for Notepad page) */
-.notepad-container {
-    background-color: var(--bg-secondary);
-    border-radius: 12px;
-    box-shadow: var(--soft-shadow);
-    overflow: hidden;
-    width: 100%;
-    max-width: 1600px; 
-    margin: 0 auto; 
-    display: flex;
-    flex-direction: column;
-    height: calc(100vh - 180px); 
-    min-height: 500px;
-    border: 1px solid var(--border-color);
-}
-
-.toolbar {
-    display: flex;
-    flex-wrap: wrap; 
-    align-items: center;
-    padding: 8px 15px;
-    background-color: var(--bg-primary);
-    border-bottom: 1px solid var(--border-color);
-    gap: 5px; 
-}
-
-.toolbar-group {
-    display: flex;
-    align-items: center;
-    gap: 5px; 
-    margin: 3px 0; 
-}
-
-.separator {
-    width: 1px;
-    height: 24px;
-    background-color: var(--border-color);
-    margin: 0 10px;
-}
-
-.toolbar-btn {
-    background: none;
-    border: none;
-    padding: 8px;
-    border-radius: 6px;
-    cursor: pointer;
-    color: var(--text-primary);
-    font-size: 1.1rem; 
-    transition: background-color var(--transition-speed), color var(--transition-speed);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.toolbar-btn:hover {
-    background-color: var(--border-color);
-    color: var(--accent-color);
-}
-
-.toolbar-btn.active {
-    background-color: rgba(var(--accent-color-rgb, 99, 102, 241), 0.2);
-    color: var(--accent-color);
-}
-
-.font-selector,
-.font-size-selector {
-    padding: 6px 10px;
-    border-radius: 6px;
-    border: 1px solid var(--border-color);
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    font-size: 0.9rem;
-    cursor: pointer;
-    max-width: 150px; 
-    transition: border-color var(--transition-speed), box-shadow var(--transition-speed);
-}
-
-.font-selector:hover,
-.font-size-selector:hover {
-    border-color: var(--accent-color);
-}
-
-.font-selector:focus,
-.font-size-selector:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
-}
-
-.color-input {
-    width: 28px;
-    height: 28px;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    cursor: pointer;
-    padding: 2px; 
-    background-color: var(--bg-secondary); 
-    transition: border-color var(--transition-speed);
-}
-
-.color-input::-webkit-color-swatch-wrapper {
-    padding: 0; 
-}
-.color-input::-webkit-color-swatch {
-    border: none; 
-    border-radius: 4px; 
-}
-/* Firefox */
-.color-input::-moz-color-swatch {
-    border: none;
-    border-radius: 4px;
-}
-.color-input:hover {
-    border-color: var(--accent-color);
-}
-
-.word-counter-container {
-    margin-left: auto; 
-    padding: 0 10px;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    white-space: nowrap;
-}
-
-.editor-container {
-    flex-grow: 1;
-    padding: 20px;
-    overflow-y: auto;
-    position: relative; 
-}
-
-#notepad {
-    width: 100%;
-    height: 100%;
-    outline: none;
-    font-size: 19px; 
-    line-height: 1.7;
-    color: var(--text-primary);
-    caret-color: var(--accent-color);
-    min-height: 200px; 
-}
-
-/* Placeholder styling */
-#notepad:empty:before {
-    content: attr(placeholder);
-    color: var(--text-secondary);
-    opacity: 0.6;
-    position: absolute;
-    top: 20px; 
-    left: 20px; 
-    pointer-events: none; 
-}
-
-/* Fullscreen mode */
-.fullscreen-mode .notepad-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    border-radius: 0;
-    z-index: 1001; 
-    max-width: none;
-    border: none;
-    box-shadow: none;
-}
-
-.fullscreen-mode .main-nav,
-.fullscreen-mode .ad-container,
-.fullscreen-mode .footer {
+#calculators .calculator-grid > p {
     display: none; 
 }
 
-/* Tool Description & Features Grid (Can be reused or adapted) */
-.tool-description {
-    width: 100%;
-    max-width: 1000px;
-    margin: 30px auto;
-    padding: 30px;
-    background-color: var(--bg-secondary);
-    border-radius: 12px;
-    box-shadow: var(--soft-shadow);
-    text-align: center;
-    border: 1px solid var(--border-color);
-}
-.tool-description h1 {
-    font-size: 2rem;
-    margin-bottom: 15px;
-    color: var(--accent-color);
-}
-.tool-description p {
-    color: var(--text-secondary);
-    margin-bottom: 25px;
-    line-height: 1.7;
-}
-
-.features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 25px;
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    body {
-        padding-top: 75px; /* Adjust for potentially smaller nav */
-    }
-    .main-nav {
-        padding: 12px 15px;
-        gap: 10px;
-    }
-    .nav-link {
-        padding: 8px 12px;
-        font-size: 0.9rem;
-    }
-    .home-header h1 {
-        font-size: 2.5rem;
-    }
-    .home-header p {
-        font-size: 1.1rem;
-    }
-    .calculator-gallery h2, .about-section h2 {
-        font-size: 1.8rem;
-        margin-bottom: 30px;
-    }
-    .gallery-grid {
-        gap: 25px;
-    }
-    .calculator-card {
-        padding: 25px;
-    }
-    .card-icon-bg {
-        width: 45px;
-        height: 45px;
-        margin-bottom: 15px;
-    }
-    .card-icon {
-        font-size: 1.6rem;
-    }
-    .calculator-card h3 {
-        font-size: 1.3rem;
-    }
-    .card-link {
-        padding: 12px 24px;
-    }
-    .about-section {
-        padding: 30px;
-    }
-    .footer-menu {
-        gap: 15px;
-        flex-wrap: wrap; /* Allow wrapping on small screens */
-    }
-
-    /* Notepad specific adjustments if needed */
-    .saved-files-container {
-        width: 90%;
-        max-width: 300px;
-        right: 5%;
-        top: 75px;
-    }
-    .toolbar {
-        padding: 8px 10px; /* Reduce padding */
-        gap: 3px;
-    }
-    .toolbar-group {
-        gap: 3px;
-    }
-    .separator {
-        margin: 0 5px; /* Reduce separator margin */
-    }
-    .toolbar-btn {
-        padding: 6px; /* Reduce button padding */
-        font-size: 1rem;
-    }
-    .font-selector, .font-size-selector {
-        padding: 5px 8px;
-        font-size: 0.85rem;
-    }
-     .word-counter-container {
-       display: none; /* Hide on smaller screens if needed */
-    }
-}
-
-@media (max-width: 480px) {
-     .home-header h1 {
-        font-size: 2rem;
-    }
-    .home-header p {
-        font-size: 1rem;
-    }
-    .gallery-grid {
-        grid-template-columns: 1fr; /* Stack cards */
-        gap: 20px;
-    }
-    .nav-link span { /* Option to hide text on very small screens */
-       /* display: none; */
-    }
-    .nav-link {
-       padding: 8px;
-    }
-    .nav-link i {
-       font-size: 1.3em;
-    }
-    .footer-menu {
-        gap: 10px;
-    }
-     .footer-menu li a {
-        font-size: 0.9rem;
-    }
-}
-
-.footer {
-    width: 100%;
-    max-width: 1200px;
-    margin-top: auto; /* Pushes footer to bottom */
-    padding: 25px 20px;
-    text-align: center;
-    border-top: 1px solid var(--border-color);
-    margin-top: 50px; /* Add margin above footer */
-}
-
-.footer-menu {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    gap: 25px; /* Increase gap */
-}
-
-.footer-menu li a {
+.calculator-card-link {
     text-decoration: none;
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-    transition: color var(--transition-speed);
+    color: inherit; 
+    display: block; 
 }
 
-.footer-menu li a:hover {
-    color: var(--accent-color);
+.calculator-card {
+    border: 1px solid #dee2e6; 
+    padding: 1.8rem 1.5rem; 
+    border-radius: 8px; 
+    background-color: #f8f9fa; 
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    cursor: pointer; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%; 
+    box-sizing: border-box; 
+}
+
+.calculator-icon {
+    width: 55px; 
+    height: 55px;
+    margin-bottom: 1.2rem; 
+    color: #007bff; 
+}
+
+.calculator-card h3 {
+    margin-top: 0;
+    margin-bottom: 0.6rem; 
+    font-size: 1.3rem; 
+    color: #343a40;
+}
+
+.calculator-card p {
+    font-size: 0.95rem;
+    color: #6c757d;
+    margin-bottom: 0;
+    flex-grow: 1; 
+}
+
+.calculator-card-link:hover .calculator-card { 
+    transform: translateY(-5px); 
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); 
+}
+
+#featured-calculators {
+    margin-top: 3rem; 
+    padding-top: 2rem; 
+    border-top: 1px solid #e9ecef; 
+}
+
+.featured-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 350px)); 
+    justify-content: center; 
+}
+
+.see-all-link {
+    text-align: center;
+    margin-top: 2rem; 
+}
+
+.see-all-link .cta-link {
+    font-size: 1.1rem; 
+}
+
+section > p {
+    margin-bottom: 1.2rem;
+    color: #495057;
+    font-size: 1.1rem;
+}
+
+footer {
+    text-align: center;
+    padding: 2rem 1.5rem; 
+    margin-top: 4rem; 
+    background-color: #e9ecef; 
+    color: #6c757d; 
+    font-size: 0.95rem; 
+    border-top: 1px solid #dee2e6; 
+}
+
+footer p {
+    margin-bottom: 0.8rem; 
+}
+
+footer .footer-links { 
+    margin-top: 0.8rem;
+}
+
+footer .footer-links a {
+    color: #495057; 
+    text-decoration: none;
+    margin: 0 0.75rem; 
+    transition: color 0.3s ease;
+}
+
+footer .footer-links a:hover {
+    color: #0056b3; 
     text-decoration: underline;
 }
